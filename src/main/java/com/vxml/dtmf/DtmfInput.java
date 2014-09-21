@@ -4,13 +4,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Scanner;
 
+import com.vxml.core.browser.VxmlBrowser;
+
 public class DtmfInput {
 
     private String input;
 
-    private BufferedReader stdin;
+    private Scanner stdin;
     
-    public DtmfInput(BufferedReader in) {
+    public DtmfInput(Scanner in) {
     	stdin = in;
     }
     
@@ -18,11 +20,9 @@ public class DtmfInput {
         String value = null;
         System.out.print("Input>");
         try {
-            Scanner in = new Scanner(stdin);
-            if (in.hasNext()) {
-                value = in.next();
+            if (stdin.hasNext()) {
+                value = stdin.next();
             }
-            in.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -33,13 +33,15 @@ public class DtmfInput {
         System.out.print("Input(wait " + (timeout / 1000) + " sec)>");
         ReadThread myThread = new ReadThread();
         myThread.start();
-        try {
-            Thread.sleep(timeout);
-        } catch (InterruptedException e) {
-            // Do nothing
+        if (!VxmlBrowser.isSuspend()) {
+        	try {
+        		Thread.sleep(timeout);
+        	} catch (InterruptedException e) {
+        		// Do nothing
+        	}
+        	
+        	myThread.interrupt();
         }
-
-        myThread.interrupt();
         return input;
     }
 
@@ -48,16 +50,16 @@ public class DtmfInput {
 		@Override
         public void run() {
             while (!isInterrupted()) {
-                try {
-                    if (stdin.ready()) {
-                        input = stdin.readLine();
+//                try {
+                    if (stdin.hasNext()) {
+                        input = stdin.next();
                         System.out.println("Got: " + input);
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-
-                }
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                } finally {
+//
+//                }
             }
             if (input == null) {
                 System.out.println("Aborted.");

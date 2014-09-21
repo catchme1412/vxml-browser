@@ -1,9 +1,8 @@
 package com.vxml.core.browser;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Scanner;
 
 import javax.script.ScriptException;
 
@@ -15,13 +14,14 @@ public class VxmlBrowser {
 
 	private String entryPointUrl;
 	private static VxmlExecutionContext context;
-
+	private static boolean isSuspend;
+	
 	public VxmlBrowser() {
 		if (context != null) {
 			try {
 				context = new VxmlExecutionContext();
 				//default input is from keyboard
-				context.setDtmfSource(new BufferedReader(new InputStreamReader(System.in)));
+				context.setDtmfSource(new Scanner(System.in));
 			} catch (ScriptException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -65,5 +65,13 @@ public class VxmlBrowser {
 
 	public void setContext(VxmlExecutionContext context) {
 		this.context = context;
+	}
+
+	public static boolean isSuspend() {
+		return isSuspend;
+	}
+
+	public static void setSuspend(boolean supend) {
+		isSuspend = supend;
 	}
 }

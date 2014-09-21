@@ -74,4 +74,9 @@ public class VxmlBrowserVerifier {
 		}
 
 	}
+
+	public void resume() {
+		// TODO Auto-generated method stub
+		
+	}
 }

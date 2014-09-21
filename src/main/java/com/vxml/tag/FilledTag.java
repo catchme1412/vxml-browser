@@ -47,8 +47,8 @@ public class FilledTag extends AbstractTag {
 	@Override
 	public void execute() throws Event {
 		try {
-			String value = new DtmfInput(VxmlBrowser.getContext().getDtmfSource()).readWithTimeOut(5000);
-			if (value != null) {
+			String value = new DtmfInput(VxmlBrowser.getContext().getDtmfSource()).read();
+			if (value != null && !"noinput".equals(value)) {
 				String fieldName = getFieldName();
 				VxmlBrowser.getContext().assignScriptVar(fieldName, value);
 

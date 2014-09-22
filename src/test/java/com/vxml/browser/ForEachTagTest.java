@@ -29,26 +29,26 @@ public class ForEachTagTest {
 	@AfterMethod
 	public void cleanUp() {
 		if (dtmfSource != null) {
+
 			dtmfSource.close();
 		}
 	}
 
 	@Test
 	public void testForEach() throws VxmlException, URISyntaxException, Event, IOException {
-		// final String DTMF_INPUT = "1";
-		final String[] FOR_LOOP_ITEMS = { "mango", "cotton candy", "apple pie", "cheesecake", "raspberry" };
+		final String DTMF_INPUT = "1";
+		final String[] FOR_LOOP_ITEMS = {"mango", "cotton candy", "apple pie", "cheesecake", "raspberry"};
 
 		vxmlBrowser.setEntryPointUrl(VxmlBrowserWrapper.getFullUri("/forEach.vxml"));
 
-		// dtmfSource = new Scanner(DTMF_INPUT);
-		// dtmfSource.useDelimiter(",");
-		// VxmlBrowser.getContext().setDtmfSource(dtmfSource);
+		dtmfSource = new Scanner(DTMF_INPUT);
+		dtmfSource.useDelimiter(",");
+		VxmlBrowser.getContext().setDtmfSource(dtmfSource);
 		VxmlBrowserWrapper verifier = new VxmlBrowserWrapper(vxmlBrowser);
 		verifier.start();
 		AssertJUnit.assertEquals(verifier.nextOuput(), "TTS:Welcome to ABC Frozen Yogurt.");
 		AssertJUnit.assertEquals(verifier.nextOuput(), "TTS:The current flavors of the week are");
-		System.out.println(FOR_LOOP_ITEMS.length);
-		for (int i = 0; i < FOR_LOOP_ITEMS.length; i++) {
+		for (int i = 0; i < FOR_LOOP_ITEMS.length ; i++) {
 			AssertJUnit.assertEquals(verifier.nextOuput(), FOR_LOOP_ITEMS[i]);
 		}
 		AssertJUnit.assertEquals(verifier.nextOuput(), "TTS:Thank you for calling ABC Frozen Yogurt. We hope you stop by soon.");

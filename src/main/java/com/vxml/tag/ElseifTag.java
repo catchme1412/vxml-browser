@@ -7,40 +7,45 @@ import com.vxml.core.browser.VxmlScriptEngine;
 
 public class ElseifTag extends AbstractTag {
 
+	public ElseifTag(Node node) {
+		super(node);
+	}
 
-    public ElseifTag(Node node) {
-        super(node);
-    }
+	@Override
+	public void startTag() {
+		Boolean isIfCondition = isIfConditionTrue();
+		if (isIfCondition != null && !isIfCondition) {
+			String cond = getAttribute("cond");
+			Boolean elseIfCondition = (Boolean) VxmlBrowser.getContext().executeScript(cond);
 
-    @Override
-    public void startTag() {
-        Boolean isIfCondition = isIfConditionTrue();
-        if (!isIfCondition) {
-            String cond = getAttribute("cond");
-            Boolean elseIfCondition = (Boolean) VxmlBrowser.getContext().executeScript(cond);
+			if (elseIfCondition) {
+				setSkipExecute(false);
+				markElseIfCondition(true);
+			} else {
+				markElseIfCondition(false);
+				setSkipExecute(true);
+			}
+		} else {
+			setSkipExecute(true);
+		}
+	}
 
-            if (elseIfCondition != null && elseIfCondition) {
-                setSkipExecute(false);
-                // Just to skip else tag
-                VxmlBrowser.getContext().executeScript(VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE
-                        + ".ifCondition=true");
-            } else {
-                setSkipExecute(true);
-            }
-        } else {
-            setSkipExecute(true);
-        }
-    }
 
-    @Override
-    public void execute() {}
+	@Override
+	public void execute() {
+	}
 
-    private Boolean isIfConditionTrue() {
-        return (Boolean) VxmlBrowser.getContext().executeScript(
-                "_vxmlExecutionContext.ifConditionLevel_" + ifConditionLevel);
-    }
+	private void markElseIfCondition(boolean isTrue) {
+		VxmlBrowser.getContext().assignScriptVar(
+				VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + ".elseIfCondition_" + ifConditionLevel, isTrue);
+	}
 
-    @Override
-    public void endTag() {
-    }
+	private Boolean isIfConditionTrue() {
+		return (Boolean) VxmlBrowser.getContext().getScriptVar(
+				VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + ".ifConditionLevel_" + ifConditionLevel);
+	}
+
+	@Override
+	public void endTag() {
+	}
 }

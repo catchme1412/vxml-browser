@@ -3,43 +3,47 @@ package com.vxml.tag;
 import org.w3c.dom.Node;
 
 import com.vxml.core.browser.VxmlBrowser;
+import com.vxml.core.browser.VxmlScriptEngine;
 
 public class IfTag extends AbstractTag {
 
-    private Boolean isIfConditionTrue;
-    private boolean isSkipBackup;
+	private static final String IF_CONDITION_LEVEL_PREFIX = ".ifConditionLevel_";
+	private Boolean isIfConditionTrue;
+	private boolean isSkipBackup;
 
-    public IfTag(Node node) {
-        super(node);
-    }
+	public IfTag(Node node) {
+		super(node);
+	}
 
-    @Override
-    public void startTag() {
-        ifConditionLevel++;
-//        VxmlBrowser.getContext().assignScriptVar("_vxmlExecutionContext.ifConditionLevel_" + ifConditionLevel, null);
-        VxmlBrowser.getContext().executeScript("_vxmlExecutionContext.ifConditionLevel_" + ifConditionLevel + "=false");
-        isSkipBackup = isSkipExecute();
-    }
+	@Override
+	public void startTag() {
+		isSkipBackup = isSkipExecute();
+		ifConditionLevel++;
+	}
 
-    @Override
-    public void execute() {
-        String cond = getAttribute("cond");
-        isIfConditionTrue = (Boolean) VxmlBrowser.getContext().executeScript(cond);
-        isIfConditionTrue = isIfConditionTrue != null ? isIfConditionTrue : false;
-        VxmlBrowser.getContext().executeScript(
-                "_vxmlExecutionContext.ifConditionLevel_" + ifConditionLevel + "=" + isIfConditionTrue);
-        if (isIfConditionTrue) {
-            setSkipExecute(false);
-        } else {
-            setSkipExecute(true);
-        }
-    }
+	@Override
+	public void execute() {
+		String cond = getAttribute("cond");
+		isIfConditionTrue = (Boolean) VxmlBrowser.getContext().executeScript(cond);
+		markIfCondition(isIfConditionTrue);
+		if (isIfConditionTrue) {
+			setSkipExecute(false);
+		} else {
+			setSkipExecute(true);
+		}
+	}
 
-    @Override
-    public void endTag() {
-        VxmlBrowser.getContext().executeScript("_vxmlExecutionContext.ifConditionLevel_" + ifConditionLevel+"=false");
-        ifConditionLevel--;
-        setSkipExecute(isSkipBackup);
-    }
+	private void markIfCondition(boolean isTrue) {
+		VxmlBrowser.getContext().assignScriptVar(
+				VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + IF_CONDITION_LEVEL_PREFIX + ifConditionLevel, isTrue);
+	}
+
+	@Override
+	public void endTag() {
+		// markIfCondition(false);
+		// decrement only after setting calling markIfCondition method
+		ifConditionLevel--;
+		setSkipExecute(isSkipBackup);
+	}
 
 }

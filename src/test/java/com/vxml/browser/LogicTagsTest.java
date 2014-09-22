@@ -13,6 +13,7 @@ import org.testng.annotations.Test;
 import com.vxml.browser.event.Event;
 import com.vxml.core.VxmlException;
 import com.vxml.core.browser.VxmlBrowser;
+import com.vxml.tag.AbstractTag;
 
 public class LogicTagsTest {
 
@@ -119,7 +120,45 @@ public class LogicTagsTest {
         AssertJUnit.assertEquals("TTS:Input first if", verifier.nextOuput());
         AssertJUnit.assertEquals("TTS:Input second if", verifier.nextOuput());
         AssertJUnit.assertEquals("TTS:Input nested Else If", verifier.nextOuput());
-        AssertJUnit.assertEquals("TTS:Nested else if is true", verifier.nextOuput());
+        AssertJUnit.assertEquals("TTS:Nested else is true", verifier.nextOuput());
+    }
+    
+    @Test
+    public void testOuterElseIf() throws VxmlException, URISyntaxException, Event, IOException {
+        String DTMF_INPUT = "false,false,false";
+        dtmfSource = new Scanner(DTMF_INPUT);
+        dtmfSource.useDelimiter(",");
+        VxmlBrowser.getContext().setDtmfSource(dtmfSource);
+        
+        VxmlBrowserWrapper.setBaseUrl("http://localhost:8080/vxml-browser");
+        vxmlBrowser.setEntryPointUrl(VxmlBrowserWrapper.getFullUri("/nestedIf.vxml"));
+
+        VxmlBrowserWrapper verifier = new VxmlBrowserWrapper(vxmlBrowser);
+        verifier.start();
+
+        AssertJUnit.assertEquals("TTS:Input first if", verifier.nextOuput());
+        AssertJUnit.assertEquals("TTS:Input second if", verifier.nextOuput());
+        AssertJUnit.assertEquals("TTS:Input nested Else If", verifier.nextOuput());
+        AssertJUnit.assertEquals("TTS:outer else if condition is true", verifier.nextOuput());
+    }
+    
+    @Test
+    public void testNestedElseIfOuter2() throws VxmlException, URISyntaxException, Event, IOException {
+        String DTMF_INPUT = "outerElseShouldBeExecuted,true,false";
+        dtmfSource = new Scanner(DTMF_INPUT);
+        dtmfSource.useDelimiter(",");
+        VxmlBrowser.getContext().setDtmfSource(dtmfSource);
+        
+        VxmlBrowserWrapper.setBaseUrl("http://localhost:8080/vxml-browser");
+        vxmlBrowser.setEntryPointUrl(VxmlBrowserWrapper.getFullUri("/nestedIf.vxml"));
+
+        VxmlBrowserWrapper verifier = new VxmlBrowserWrapper(vxmlBrowser);
+        verifier.start();
+
+        AssertJUnit.assertEquals("TTS:Input first if", verifier.nextOuput());
+        AssertJUnit.assertEquals("TTS:Input second if", verifier.nextOuput());
+        AssertJUnit.assertEquals("TTS:Input nested Else If", verifier.nextOuput());
+        AssertJUnit.assertEquals("TTS:Outer else condition is true", verifier.nextOuput());
     }
     
 

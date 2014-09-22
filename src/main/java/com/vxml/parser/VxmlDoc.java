@@ -7,6 +7,7 @@ import org.w3c.dom.Document;
 import com.vxml.browser.event.Event;
 import com.vxml.core.browser.VxmlBrowser;
 import com.vxml.store.DocumentStore;
+import com.vxml.tag.AbstractTag;
 
 public class VxmlDoc {
 
@@ -22,6 +23,7 @@ public class VxmlDoc {
 //    }
 
     public VxmlDoc(String string) {
+    	AbstractTag.setSkipExecute(false);
         this.setDocumentUrl(string);
         URI uri;
         uri = VxmlBrowser.getContext().getFullUri(string);

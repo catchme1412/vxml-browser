@@ -23,7 +23,7 @@
 					<prompt>Nested else is true</prompt>
 			</if>
 		<elseif cond="outerIfCondition == false" />
-			<prompt>outer If condition is false</prompt>
+			<prompt>outer else if condition is true</prompt>
 		<else />
 			<prompt>Outer else condition is true</prompt>
 		</if>

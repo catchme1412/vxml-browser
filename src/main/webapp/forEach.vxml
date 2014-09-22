@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vxml version="2.1">
+   <form id="F1">
+      <block>
+         <prompt>Welcome to ABC Frozen Yogurt.</prompt>
+         <script>var arrayFlavors = ["mango","cotton candy","apple pie","cheesecake","raspberry"];</script>
+         <prompt>
+            The current flavors of the week are
+            <break />
+         </prompt>
+         <foreach item="flavor" array="arrayFlavors">
+            <prompt>
+               <value expr="flavor" />
+               <break />
+            </prompt>
+         </foreach>
+         <prompt>Thank you for calling ABC Frozen Yogurt. We hope you stop by soon.</prompt>
+      </block>
+   </form>
+</vxml>

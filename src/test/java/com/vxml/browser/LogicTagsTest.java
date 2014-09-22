@@ -143,7 +143,7 @@ public class LogicTagsTest {
     }
     
     @Test
-    public void testNestedElseIfOuter2() throws VxmlException, URISyntaxException, Event, IOException {
+    public void testOuterElse() throws VxmlException, URISyntaxException, Event, IOException {
         String DTMF_INPUT = "outerElseShouldBeExecuted,true,false";
         dtmfSource = new Scanner(DTMF_INPUT);
         dtmfSource.useDelimiter(",");

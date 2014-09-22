@@ -16,7 +16,7 @@ public class LogTag extends AbstractTag {
 
     @Override
     public void startTag() {
-        VxmlExecutionContext.setTtsAllowed(false);
+        VxmlExecutionContext.setSlientMode(true);
     }
 
     @Override
@@ -27,6 +27,6 @@ public class LogTag extends AbstractTag {
 
     @Override
     public void endTag() {
-        VxmlExecutionContext.setTtsAllowed(true);
+        VxmlExecutionContext.setSlientMode(false);
     }
 }

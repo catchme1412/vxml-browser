@@ -30,7 +30,7 @@ public class AudioTag extends AbstractTag {
                 try {
                 	audioUrl = audioUrl.replaceAll("audio.en-US.tellme.com", "ivraudio.orbitz.net");
                     new NativeCommand().play(audioUrl);
-                    VxmlExecutionContext.setTtsAllowed(false);
+                    VxmlExecutionContext.setSlientMode(true);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -42,7 +42,7 @@ public class AudioTag extends AbstractTag {
 
     @Override
     public void endTag() {
-        VxmlExecutionContext.setTtsAllowed(true);
+        VxmlExecutionContext.setSlientMode(true);
     }
 
 	public String getAudioUrl() {

@@ -29,7 +29,7 @@ public class TextTag extends AbstractTag {
 	
 	@Override
 	public String toString() {
-	    return "TextTag:"+ text;
+	    return "TTS:"+ text;
 	}
 
 }

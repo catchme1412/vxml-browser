@@ -46,8 +46,8 @@ public class LogicTagsTest {
         VxmlBrowser.getContext().setDtmfSource(dtmfSource);
         VxmlBrowserWrapper verifier = new VxmlBrowserWrapper(vxmlBrowser);
         verifier.start();
-        AssertJUnit.assertEquals(verifier.next(), "TextTag:Input 1 or 2 or something else?");
-        AssertJUnit.assertEquals(verifier.next(), "TextTag:Input is one");
+        AssertJUnit.assertEquals(verifier.nextOuput(), "TTS:Input 1 or 2 or something else?");
+        AssertJUnit.assertEquals(verifier.nextOuput(), "TTS:Input is one");
     }
     
     @Test
@@ -61,15 +61,15 @@ public class LogicTagsTest {
         VxmlBrowser.getContext().setDtmfSource(dtmfSource);
         VxmlBrowserWrapper verifier = new VxmlBrowserWrapper(vxmlBrowser);
         verifier.start();
-        AssertJUnit.assertEquals("TextTag:Input 1 or 2 or something else?", verifier.next());
-        AssertJUnit.assertEquals("TextTag:Input is two", verifier.next());
+        AssertJUnit.assertEquals("TTS:Input 1 or 2 or something else?", verifier.nextOuput());
+        AssertJUnit.assertEquals("TTS:Input is two", verifier.nextOuput());
         
     }
     
 
     @Test
     public void testNestedIf() throws VxmlException, URISyntaxException, Event, IOException {
-        final String DTMF_INPUT = "true,true,false";
+        String DTMF_INPUT = "true,true,false";
         
         vxmlBrowser.setEntryPointUrl(VxmlBrowserWrapper.getFullUri("/nestedIf.vxml"));
 
@@ -78,12 +78,49 @@ public class LogicTagsTest {
         VxmlBrowser.getContext().setDtmfSource(dtmfSource);
         VxmlBrowserWrapper verifier = new VxmlBrowserWrapper(vxmlBrowser);
         verifier.start();
-        AssertJUnit.assertEquals("TextTag:Input first if", verifier.next());
-        AssertJUnit.assertEquals("TextTag:Input second if", verifier.next());
-        AssertJUnit.assertEquals("TextTag:Input nested Else If", verifier.next());
-        AssertJUnit.assertEquals("TextTag:Input nested Else If", verifier.next());
+        AssertJUnit.assertEquals("TTS:Input first if", verifier.nextOuput());
+        AssertJUnit.assertEquals("TTS:Input second if", verifier.nextOuput());
+        AssertJUnit.assertEquals("TTS:Input nested Else If", verifier.nextOuput());
+        AssertJUnit.assertEquals("TTS:Both if true", verifier.nextOuput());
     }
     
+    @Test
+    public void testNestedElseIf() throws VxmlException, URISyntaxException, Event, IOException {
+        String DTMF_INPUT = "true,false,true";
+        dtmfSource = new Scanner(DTMF_INPUT);
+        dtmfSource.useDelimiter(",");
+        VxmlBrowser.getContext().setDtmfSource(dtmfSource);
+        
+        VxmlBrowserWrapper.setBaseUrl("http://localhost:8080/vxml-browser");
+        vxmlBrowser.setEntryPointUrl(VxmlBrowserWrapper.getFullUri("/nestedIf.vxml"));
+
+        VxmlBrowserWrapper verifier = new VxmlBrowserWrapper(vxmlBrowser);
+        verifier.start();
+
+        AssertJUnit.assertEquals("TTS:Input first if", verifier.nextOuput());
+        AssertJUnit.assertEquals("TTS:Input second if", verifier.nextOuput());
+        AssertJUnit.assertEquals("TTS:Input nested Else If", verifier.nextOuput());
+        AssertJUnit.assertEquals("TTS:Nested else if is true", verifier.nextOuput());
+    }
+    
+    @Test
+    public void testNestedElse() throws VxmlException, URISyntaxException, Event, IOException {
+        String DTMF_INPUT = "true,false,false";
+        dtmfSource = new Scanner(DTMF_INPUT);
+        dtmfSource.useDelimiter(",");
+        VxmlBrowser.getContext().setDtmfSource(dtmfSource);
+        
+        VxmlBrowserWrapper.setBaseUrl("http://localhost:8080/vxml-browser");
+        vxmlBrowser.setEntryPointUrl(VxmlBrowserWrapper.getFullUri("/nestedIf.vxml"));
+
+        VxmlBrowserWrapper verifier = new VxmlBrowserWrapper(vxmlBrowser);
+        verifier.start();
+
+        AssertJUnit.assertEquals("TTS:Input first if", verifier.nextOuput());
+        AssertJUnit.assertEquals("TTS:Input second if", verifier.nextOuput());
+        AssertJUnit.assertEquals("TTS:Input nested Else If", verifier.nextOuput());
+        AssertJUnit.assertEquals("TTS:Nested else if is true", verifier.nextOuput());
+    }
     
 
 }

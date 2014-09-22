@@ -1,14 +1,9 @@
 package com.vxml.tag;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.w3c.dom.Node;
 
 import com.vxml.browser.event.Event;
 import com.vxml.core.browser.VxmlBrowser;
-import com.vxml.parser.event.OutputListener;
 import com.vxml.utils.XmlUtils;
 
 public abstract class AbstractTag implements Tag {

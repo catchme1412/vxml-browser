@@ -21,11 +21,11 @@ public class VxmlBrowserWrapper {
 
 	private LinkedBlockingDeque<String> keyInputList;
 
-	public static final String baseUrl = "http://localhost:8082/vxml-browser";
+	private static String baseUrl = "http://localhost:8080/vxml-browser";
 	public VxmlBrowserWrapper(VxmlBrowser vxmlBrowser) throws IOException {
 		keyInputList = new LinkedBlockingDeque<String>();
 		this.vxmlBrowser = vxmlBrowser;
-		VxmlExecutionContext.setSlientMode(true);
+//		VxmlExecutionContext.setSlientMode(true);
 
 		queue = new LinkedBlockingDeque<String>();
 		audioEventListener = new OutputListener() {
@@ -47,7 +47,7 @@ public class VxmlBrowserWrapper {
 		keyInputList.add(i);
 	}
 
-	public String next() {
+	public String nextOuput() {
 		if (!queue.isEmpty()) {
 			return queue.pop();
 		}
@@ -83,6 +83,14 @@ public class VxmlBrowserWrapper {
 	}
 	
 	public static String getFullUri(String uri) {
-	    return baseUrl + uri;
+	    return getBaseUrl() + uri;
+	}
+
+	public static String getBaseUrl() {
+		return baseUrl;
+	}
+
+	public static void setBaseUrl(String baseUrl) {
+		VxmlBrowserWrapper.baseUrl = baseUrl;
 	}
 }

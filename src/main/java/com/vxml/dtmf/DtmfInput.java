@@ -1,15 +1,12 @@
 package com.vxml.dtmf;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.util.Scanner;
 
-import com.vxml.core.browser.VxmlBrowser;
 import com.vxml.core.browser.VxmlExecutionContext;
 
 public class DtmfInput {
 
-    private String input;
+    private Object input;
 
     private Scanner stdin;
 
@@ -30,7 +27,7 @@ public class DtmfInput {
         return value;
     }
 
-    public String readWithTimeOut(int timeout) {
+    public Object readWithTimeOut(int timeout) {
         System.out.print("Input(wait " + (timeout / 1000) + " sec)>");
         ReadThread myThread = new ReadThread();
         myThread.start();
@@ -40,6 +37,13 @@ public class DtmfInput {
             } catch (InterruptedException e) {
                 // Do nothing
             }
+        } else {
+        	try {
+				myThread.join();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         }
 
         myThread.interrupt();
@@ -54,7 +58,11 @@ public class DtmfInput {
             while (!isInterrupted()) {
                 // try {
                 if (stdin.hasNext()) {
-                    input = stdin.next();
+                	if (stdin.hasNextBoolean()) {
+                		input = stdin.nextBoolean();
+                	} else {
+                		input = stdin.next();
+                	}
                     System.out.println("Got: " + input);
                     break;
                 }

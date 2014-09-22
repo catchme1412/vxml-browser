@@ -6,26 +6,26 @@
 			<filled>
 			</filled>
 		</field>
-		<field name="secondIfCondition">
+		<field name="innerIfCondition">
 			<prompt>Input second if</prompt>
 			<filled></filled>
 		</field>
-		<field name="nestedElseIf">
+		<field name="innerElseIfCondition">
 			<prompt>Input nested Else If</prompt>
 			<filled></filled>
 		</field>
 		<if cond="outerIfCondition == true">
-			<if cond="secondIfCondition == true">
+			<if cond="innerIfCondition == true">
 					<prompt>Both if true</prompt>
-				<elseif cond="nestedElseIf == true" />
+				<elseif cond="innerElseIfCondition == true" />
 					<prompt>Nested else if is true</prompt>
 				<else />
-					<prompt>Should not reach here</prompt>
+					<prompt>Nested else is true</prompt>
 			</if>
-			<elseif cond="outerIfCondition == false" />
-			<prompt>outer If Condition is false</prompt>
-			<else />
-			<prompt>Input is not one or two</prompt>
+		<elseif cond="outerIfCondition == false" />
+			<prompt>outer If condition is false</prompt>
+		<else />
+			<prompt>Outer else condition is true</prompt>
 		</if>
 	</form>
 </vxml>

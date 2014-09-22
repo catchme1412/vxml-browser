@@ -14,7 +14,6 @@ public class VxmlBrowser {
 
 	private String entryPointUrl;
 	private static VxmlExecutionContext context;
-	private static boolean isSuspend;
 	
 	public VxmlBrowser() {
 		if (context != null) {
@@ -48,7 +47,7 @@ public class VxmlBrowser {
 
 	public static void main(String[] args) throws VxmlException, URISyntaxException, Event {
 		VxmlBrowser vxmlBrowser = new VxmlBrowser();
-		vxmlBrowser.setEntryPointUrl("http://localhost:8080/javascript/index.html");
+		vxmlBrowser.setEntryPointUrl("http://ivroww.qa1.orbztest.com/ivr/testing/fqa.vxml");
 		vxmlBrowser.start();
 	}
 
@@ -67,11 +66,4 @@ public class VxmlBrowser {
 		this.context = context;
 	}
 
-	public static boolean isSuspend() {
-		return isSuspend;
-	}
-
-	public static void setSuspend(boolean supend) {
-		isSuspend = supend;
-	}
 }

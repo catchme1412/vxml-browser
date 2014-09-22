@@ -17,12 +17,14 @@ public class SubmitTag extends AbstractTag {
         
         if(!getNode().getParentNode().getNodeName().equals("catch")) {
             String exprValue = getAttribute("expr");
-            String expr = null;
-            if (exprValue != null) {
-                expr = (String) VxmlBrowser.getContext().executeScript(exprValue);
-            }
             String next = getAttribute("next");
-            String src = expr != null ? expr : next;
+            if(next.contains("sao.vxml")) {
+                next = "/ivr/testing/" + next;
+            }
+            String src = exprValue != null ? exprValue : next;
+            if (exprValue != null) {
+                src = (String) VxmlBrowser.getContext().executeScript(src);
+            }
             
             StringBuilder queryParams = new StringBuilder();
             src= VxmlBrowser.getContext().getDocBaseUrl() + src;
@@ -30,12 +32,14 @@ public class SubmitTag extends AbstractTag {
             queryParams.append(src);
             queryParams.append("?");
             String namelist = getAttribute("namelist");
-            String nameListArray[] = namelist.split(" ");
-            for (int i = 0; i < nameListArray.length; i++) {
-                queryParams.append(nameListArray[i]);
-                queryParams.append("=");
-                queryParams.append(VxmlBrowser.getContext().executeScript(nameListArray[i] + ";"));
-                queryParams.append("&");
+            if (namelist != null) {
+                String nameListArray[] = namelist.split(" ");
+                for (int i = 0; i < nameListArray.length; i++) {
+                    queryParams.append(nameListArray[i]);
+                    queryParams.append("=");
+                    queryParams.append(VxmlBrowser.getContext().executeScript(nameListArray[i] + ";"));
+                    queryParams.append("&");
+                }
             }
 				//TODO enable POST method
 //				result = new DocumentStore().getDoc(new URI(queryParams.toString()));

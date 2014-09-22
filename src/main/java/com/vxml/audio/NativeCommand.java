@@ -15,9 +15,6 @@ public class NativeCommand {
     }
 
     public Process play(String waveFile) {
-        if ("http://ivraudio.orbitz.net/common-audio/posOptions.wav".equals(waveFile)) {
-            return null;
-        }
         StringBuffer output = new StringBuffer();
         String[] cmd = { "/bin/sh", "-c", "wget " + waveFile + " -O /tmp/ivr.wav" };
         execute(output, cmd);

@@ -47,6 +47,8 @@ public class EventHandler {
 			list.add(lister);
 		} else {
 			list = new ArrayList();
+			list.add(lister);
+			outputListener.put(eventType, list);
 		}
 	}
 	

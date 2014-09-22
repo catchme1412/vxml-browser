@@ -16,9 +16,11 @@ import com.vxml.tag.Tag;
 public class VxmlExecutionContext {
 
     private ScriptExecutionContext scriptExecutionContext;
-    private static boolean isTtsAllowed = true;
+    private static boolean isSlientMode = true;
     private static String docBaseUrl;
     private EventHandler eventHandler;
+    
+    private boolean isSuspended;
     
     //mainly for form when referred from goto
     private Map<String, Tag> tagMap;
@@ -94,14 +96,6 @@ public class VxmlExecutionContext {
         return tagMap.get(id);
     }
 
-    public static boolean isTtsAllowed() {
-        return isTtsAllowed;
-    }
-
-    public static void setTtsAllowed(boolean tts) {
-        VxmlExecutionContext.isTtsAllowed = tts;
-    }
-
 	public Scanner getDtmfSource() {
 		return dtmfSource;
 	}
@@ -109,4 +103,25 @@ public class VxmlExecutionContext {
 	public void setDtmfSource(Scanner dtmfSource) {
 		this.dtmfSource = dtmfSource;
 	}
+
+    public boolean isSuspended() {
+        return isSuspended;
+    }
+
+    public void setSuspended(boolean isSuspended) {
+        this.isSuspended = isSuspended;
+    }
+
+    public void resume() {
+        isSuspended = false;
+        
+    }
+
+    public static boolean isSlientMode() {
+        return isSlientMode;
+    }
+
+    public static void setSlientMode(boolean isSlientMode) {
+        VxmlExecutionContext.isSlientMode = isSlientMode;
+    }
 }

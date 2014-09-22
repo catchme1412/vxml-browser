@@ -6,13 +6,16 @@ import com.vxml.core.browser.VxmlExecutionContext;
 
 public class GrammarTag extends AbstractTag {
 
+    private boolean isSlientModeBackup;
+    
 	public GrammarTag(Node node) {
 		super(node);
 	}
 
 	@Override
 	public void startTag() {
-		VxmlExecutionContext.setTtsAllowed(false);
+	    isSlientModeBackup = VxmlExecutionContext.isSlientMode();
+		VxmlExecutionContext.setSlientMode(true);
 	}
 	@Override
 	public void execute() {
@@ -21,7 +24,7 @@ public class GrammarTag extends AbstractTag {
 	
 	@Override
 	public void endTag() {
-		VxmlExecutionContext.setTtsAllowed(true);
+		VxmlExecutionContext.setSlientMode(isSlientModeBackup);
 	}
 	
 }

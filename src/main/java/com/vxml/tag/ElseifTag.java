@@ -14,10 +14,6 @@ public class ElseifTag extends AbstractTag {
 
     @Override
     public void startTag() {
-    }
-
-    @Override
-    public void execute() {
         Boolean isIfCondition = isIfConditionTrue();
         if (!isIfCondition) {
             String cond = getAttribute("cond");
@@ -35,6 +31,9 @@ public class ElseifTag extends AbstractTag {
             setSkipExecute(true);
         }
     }
+
+    @Override
+    public void execute() {}
 
     private Boolean isIfConditionTrue() {
         return (Boolean) VxmlBrowser.getContext().executeScript(

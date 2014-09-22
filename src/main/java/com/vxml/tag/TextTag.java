@@ -17,7 +17,7 @@ public class TextTag extends AbstractTag {
 
 	@Override
 	public void execute() {
-		if (!text.isEmpty() && VxmlExecutionContext.isTtsAllowed()) {
+		if (!text.isEmpty() && !VxmlExecutionContext.isSlientMode()) {
 			try {
 			    System.out.println(text);
 				new NativeCommand().speak(text);

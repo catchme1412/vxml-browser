@@ -6,29 +6,23 @@ import com.vxml.core.browser.VxmlExecutionContext;
 
 public class ItemTag extends AbstractTag {
 
+    private boolean isSlientModeBackup;
+    
     public ItemTag(Node node) {
         super(node);
     }
 
     @Override
     public void startTag() {
-        VxmlExecutionContext.setTtsAllowed(false);
+        isSlientModeBackup = VxmlExecutionContext.isSlientMode();
+        VxmlExecutionContext.setSlientMode(true);
     }
 
     @Override
-    public void execute() {
-        try {
-            String input = getNode().getFirstChild().getTextContent();
-            String inputMapping = getNode().getChildNodes().item(1).getTextContent();
-
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
+    public void execute() {}
 
     @Override
     public void endTag() {
-        VxmlExecutionContext.setTtsAllowed(true);
+        VxmlExecutionContext.setSlientMode(isSlientModeBackup);
     }
 }

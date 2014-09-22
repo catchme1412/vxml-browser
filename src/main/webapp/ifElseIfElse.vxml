@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vxml version="2.1">
+   <form id="F1">
+      <field name="F_1">
+         <prompt>Input 1 or 2 or something else?</prompt>
+         <grammar xml:lang="en-us" root="myrule">
+            <rule id="myrule">
+               <one-of>
+                  <item>1</item>
+                  <item>2</item>
+               </one-of>
+            </rule>
+         </grammar>
+         <filled>
+            <if cond="F_1=='1'">
+               <prompt>Input is one</prompt>
+               <elseif cond="F_1=='2'" />
+               <prompt>Input is two</prompt>
+               <else />
+               <prompt>Input is not one or two</prompt>
+            </if>
+         </filled>
+      </field>
+   </form>
+</vxml>

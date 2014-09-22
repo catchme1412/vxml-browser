@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vxml version="2.1">
+	<form id="F1">
+		<field name="outerIfCondition">
+			<prompt>Input first if</prompt>
+			<filled>
+			</filled>
+		</field>
+		<field name="secondIfCondition">
+			<prompt>Input second if</prompt>
+			<filled></filled>
+		</field>
+		<field name="nestedElseIf">
+			<prompt>Input nested Else If</prompt>
+			<filled></filled>
+		</field>
+		<if cond="outerIfCondition == true">
+			<if cond="secondIfCondition == true">
+					<prompt>Both if true</prompt>
+				<elseif cond="nestedElseIf == true" />
+					<prompt>Nested else if is true</prompt>
+				<else />
+					<prompt>Should not reach here</prompt>
+			</if>
+			<elseif cond="outerIfCondition == false" />
+			<prompt>outer If Condition is false</prompt>
+			<else />
+			<prompt>Input is not one or two</prompt>
+		</if>
+	</form>
+</vxml>

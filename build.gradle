@@ -18,6 +18,6 @@ dependencies {
     compile group:'junit', name:'junit', version:'3.8.1'
 }
 
-task install {
+task appInstall {
 	println "To be implemented"
 }

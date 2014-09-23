@@ -19,6 +19,6 @@ dependencies {
     compile group:'junit', name:'junit', version:'3.8.1'
 }
 
-task sara{
-println "sara"
+task sara {
+println "Test"
 }

@@ -21,9 +21,7 @@ public class SubdialogTag extends AbstractTag {
     @Override
     public void startTag() {
         name = getAttribute("name");
-        VxmlBrowser.getContext().executeScript("var " + name + "={}");
-        VxmlBrowser.getContext().executeScript(
-                VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + ".subdialogName='" + name+"'");
+        VxmlBrowser.getContext().assignScriptVar(VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + ".subdialogName", name);
     }
 
     @Override
@@ -31,7 +29,7 @@ public class SubdialogTag extends AbstractTag {
         String srcexpr = getAttribute("srcexpr");
         String src = getAttribute("src");
 //        String target = getAttribute("name");
-        src = src != null ? src : (String) VxmlBrowser.getContext().executeScript(srcexpr);
+        src = src != null ? src : (String) VxmlBrowser.getContext().getScriptVar(srcexpr);
 
         StringBuilder url = getUrl(src);
         try {

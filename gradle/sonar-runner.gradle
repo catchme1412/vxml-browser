@@ -1,0 +1,10 @@
+apply plugin: "sonar-runner"
+
+sonarRunner {
+	sonarProperties {
+		property "sonar.host.url", "http://sonar.orbitz.net"
+		property "sonar.jdbc.url", "jdbc:mysql://sonar.orbitz.net/sonar"
+		property "sonar.jdbc.driverClassName", "com.mysql.jdbc.Driver"
+		property "sonar.projectVersion", "${version}"
+	}
+}

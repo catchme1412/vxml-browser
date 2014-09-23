@@ -15,64 +15,69 @@ import javax.script.ScriptException;
 
 public class ScriptExecutionContext {
 
-	private static final Logger log = Logger.getAnonymousLogger();
-	private ScriptEngineManager manager;
+    private static final Logger log = Logger.getAnonymousLogger();
+    private ScriptEngineManager manager;
 
-	private VxmlScriptEngine scriptEngine;
+    private VxmlScriptEngine scriptEngine;
 
-	// /newCallController.htm?dnis=8886564546&ani=19733689500&uuid=684CB6BA3CCC11E4B810B0FAEB421300&newCallSuccess=true
-	public ScriptExecutionContext() throws ScriptException {
+    // /newCallController.htm?dnis=8886564546&ani=19733689500&uuid=684CB6BA3CCC11E4B810B0FAEB421300&newCallSuccess=true
+    public ScriptExecutionContext() throws ScriptException {
 
-		scriptEngine = new VxmlScriptEngine();
+        scriptEngine = new VxmlScriptEngine();
 
-	}
+    }
 
-	public Object executeScript(InputStream script) throws ScriptException {
+    public Object executeScript(InputStream script) throws ScriptException {
 
-		return scriptEngine.eval(new InputStreamReader(script));
-	}
+        return scriptEngine.eval(new InputStreamReader(script));
+    }
 
-	public Object executeScriptNullIfUndefined(String script) {
-		try {
-			return scriptEngine.eval(script);
-		} catch (Exception e) {
-			System.err.println(script);
-			System.err.println("SCRIPT FAILURE: " + e.getMessage());
+    public Object executeScriptNullIfUndefined(String script) {
+        try {
+            return scriptEngine.eval(script);
+        } catch (Exception e) {
+            System.err.println(script);
+            System.err.println("SCRIPT FAILURE: " + e.getMessage());
 
-		}
-		return null;
-	}
+        }
+        return null;
+    }
 
-	public void put(String key, Object val) {
-		scriptEngine.put(key, val);
-	}
+    public Object executeScript(String script) throws ScriptException {
+        return scriptEngine.eval(script);
 
-	public Object get(String var) {
-		return scriptEngine.get(var);
-	}
+    }
 
-	public static void main(String[] args) throws ScriptException, FileNotFoundException, NoSuchMethodException {
+    public void put(String key, Object val) {
+        scriptEngine.put(key, val);
+    }
 
-		// Create ScriptEngineManager
-		ScriptEngineManager engineManager = new ScriptEngineManager();
+    public Object get(String var) {
+        return scriptEngine.get(var);
+    }
 
-		// Create ScriptEngine
-		ScriptEngine engine = engineManager.getEngineByName("ECMAScript");
-		engine.eval("var a = {\\\"A\\\":true};");
-		// Create file and reader instance for reading the script file
-		File file = new File("/opt/orbitz/code/web-ivr/src/main/webapp/ivr/common/js/parseXmlWithAttrToObject.js");
-		Reader reader = new FileReader(file);
+    public static void main(String[] args) throws ScriptException, FileNotFoundException, NoSuchMethodException {
 
-		// Pass the script file to the engine
-		engine.eval(reader);
-		System.out.println("Java Program Output");
-		// Create invocable instance
-		Invocable invocable = (Invocable) engine;
+        // Create ScriptEngineManager
+        ScriptEngineManager engineManager = new ScriptEngineManager();
 
-		// Invoke the methods defined in the script file
-		// invocable.invokeFunction("parseXmlWithAttrToObject",
-		// "/opt/orbitz/code/web-ivr/src/main/webapp/ivr/common/js/parseXmlWithAttrToObject.js");
+        // Create ScriptEngine
+        ScriptEngine engine = engineManager.getEngineByName("ECMAScript");
+        engine.eval("var a = {\\\"A\\\":true};");
+        // Create file and reader instance for reading the script file
+        File file = new File("/opt/orbitz/code/web-ivr/src/main/webapp/ivr/common/js/parseXmlWithAttrToObject.js");
+        Reader reader = new FileReader(file);
 
-	}
+        // Pass the script file to the engine
+        engine.eval(reader);
+        System.out.println("Java Program Output");
+        // Create invocable instance
+        Invocable invocable = (Invocable) engine;
+
+        // Invoke the methods defined in the script file
+        // invocable.invokeFunction("parseXmlWithAttrToObject",
+        // "/opt/orbitz/code/web-ivr/src/main/webapp/ivr/common/js/parseXmlWithAttrToObject.js");
+
+    }
 
 }

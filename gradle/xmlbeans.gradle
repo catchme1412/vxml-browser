@@ -1,0 +1,18 @@
+configurations {
+    xbean 
+}
+
+task compileXmlSchemas {
+    dependsOn configurations.xbean.getTaskDependencyFromProjectDependency(true, "compileJava")
+
+    doLast{
+        ant.taskdef(name:'xbean', classname: 'org.apache.xmlbeans.impl.tool.XMLBean', classpath: configurations.xbean.asPath)
+        ant.xbean(schema: sourceSets.schemas.srcDir, classgendir: "${buildDir}/classes/xbean", classpath: configurations.xbean.asPath)
+    }
+}
+
+task buildIvrXbeansJar(type: Jar, dependsOn: compileXmlSchemas) {
+    archiveName = 'ivr-xbeans.jar'
+    from "${buildDir}/classes/xbean"
+    exclude '**/*.java'
+}

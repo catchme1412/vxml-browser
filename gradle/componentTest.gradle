@@ -1,0 +1,35 @@
+configurations {
+	// these conflict with org.easymock:easymock:3.1
+	componentTestCompile.exclude group: 'easymock', module: 'easymock'
+	componentTestCompile.exclude group: 'easymock', module: 'easymockclassextension'
+}
+
+dependencies {
+	componentTestCompile group: 'com.orbitz.service.testNG', name: 'service-testNG', version: '4.0'
+	componentTestCompile group: 'org.easymock', name: 'easymock', version: '3.1'
+	componentTestCompile group: 'com.orbitz.web.framework', name: 'platform-wf-mock', version: '32.38'
+	componentTestCompile group: 'org.springframework', name: 'spring-test', version: '3.0.7.RELEASE'
+	componentTestCompile group: 'junit', name: 'junit', version: '4.11'
+	componentTestCompile group: 'com.orbitz.junit', name: 'junit-lib', version: '1.6'
+	componentTestCompile group: 'jdepend', name: 'jdepend', version: '2.9.1'
+	componentTestCompile group: 'com.orbitz.config', name: 'mock-config-lib', version: '7.9'
+	componentTestCompile group: 'com.orbitz.mock.simulator', name: 'member', version: '16.1'
+	componentTestCompile group: 'org.mockito', name: 'mockito-all', version: '1.8.5'
+	componentTestCompile group: 'com.orbitz.trip', name: 'mock-svc-trip', version: '11.1'
+	componentTestCompile group: 'com.orbitz.trip', name: 'trip-api', version: '13.9'
+	componentTestCompile group: 'org.testng', name: 'testng', version: '6.3'
+    componentTestRuntime group: 'com.orbitz.service.testNG', name: 'service-testNG', version: '4.0'
+	componentTestRuntime group: 'org.codehaus.castor', name: 'castor', version: '1.2'
+	componentTestRuntime group: 'gsbase', name: 'gsbase', version: '2.0.1'
+}
+
+runComponentTests {
+	useTestNG() {
+		useDefaultListeners = true
+	}
+	reports.junitXml.destination = file('build/reports/component-tests')
+    reports.html.destination = file('build/reports/component-test-results')
+    options {
+		suites 'config/componentTest/testng.xml'
+	}
+}

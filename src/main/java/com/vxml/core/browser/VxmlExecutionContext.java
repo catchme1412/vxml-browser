@@ -1,5 +1,6 @@
 package com.vxml.core.browser;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -9,6 +10,7 @@ import java.util.Scanner;
 
 import javax.script.ScriptException;
 
+import com.vxml.audio.NativeCommand;
 import com.vxml.core.VxmlException;
 import com.vxml.parser.event.EventHandler;
 import com.vxml.tag.Tag;
@@ -19,6 +21,7 @@ public class VxmlExecutionContext {
     private static boolean isSlientMode = true;
     private static String docBaseUrl;
     private EventHandler eventHandler;
+    private NativeCommand nativeCommand;
     
     private boolean isSuspended;
     
@@ -32,6 +35,7 @@ public class VxmlExecutionContext {
         //default
         dtmfSource = new Scanner(System.in);
         tagMap = new HashMap<String, Tag>();
+        nativeCommand = new NativeCommand();
     }
 
     public Object executeScript(String script) {
@@ -123,5 +127,13 @@ public class VxmlExecutionContext {
 
     public static void setSlientMode(boolean isSlientMode) {
         VxmlExecutionContext.isSlientMode = isSlientMode;
+    }
+
+    public void playAudio(String audioUrl) {
+        nativeCommand.play(audioUrl);
+    }
+
+    public void playTTS(String text) throws IOException, InterruptedException {
+        nativeCommand.speak(text);
     }
 }

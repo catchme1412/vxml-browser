@@ -29,6 +29,9 @@ public class TagFactory {
 		if (node.getNodeType() == Node.CDATA_SECTION_NODE) {
 		    nodeName = "CDATASection";
 		}
+		if (nodeName.contains("-")) {
+		    nodeName = nodeName.replaceAll("-", "");
+		}
 		return "com.vxml.tag." + Character.toUpperCase(nodeName.charAt(0)) + nodeName.substring(1) + "Tag";
 	}
 

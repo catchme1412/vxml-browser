@@ -60,6 +60,8 @@ public class DtmfInput {
                 if (stdin.hasNext()) {
                 	if (stdin.hasNextBoolean()) {
                 		input = stdin.nextBoolean();
+                	} if (stdin.hasNextInt()) {
+                	    input = stdin.nextInt();
                 	} else {
                 		input = stdin.next();
                 	}
@@ -74,8 +76,6 @@ public class DtmfInput {
             }
             if (input == null) {
                 System.out.println("Aborted.");
-            } else {
-                System.out.println("Got: " + input);
             }
         }
     }

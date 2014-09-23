@@ -28,13 +28,13 @@ public class DataTag extends AbstractTag {
 		for (int i = 0; i < nameListArray.length; i++) {
 			queryParams.append(nameListArray[i]);
 			queryParams.append("=");
-			queryParams.append(VxmlBrowser.getContext().executeScript(nameListArray[i]));
+			queryParams.append(VxmlBrowser.getContext().getScriptVar(nameListArray[i]));
 			queryParams.append("&");
 		}
 		StringBuilder result = null;
 		try {
 			result = new DocumentStore().getData(new URI(queryParams.toString()));
-			VxmlBrowser.getContext().executeScript("var " + name + "='" + result.toString().replaceAll("'", "\\\\'") + "'");
+			VxmlBrowser.getContext().assignScriptVar(name, result.toString().replaceAll("'", "\\\\'"));
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

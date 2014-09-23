@@ -13,6 +13,7 @@ import com.vxml.parser.VxmlDoc;
 public class VxmlBrowser {
 
 	private String entryPointUrl;
+	//singleton instance
 	private static VxmlExecutionContext context;
 	
 	public VxmlBrowser() {
@@ -22,7 +23,6 @@ public class VxmlBrowser {
 				//default input is from keyboard
 				context.setDtmfSource(new Scanner(System.in));
 			} catch (ScriptException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -32,7 +32,6 @@ public class VxmlBrowser {
 		URI uri = new URI(entryPointUrl);
 		context.setDocBaseUrl(uri.getScheme() + "://" + uri.getAuthority());
 		
-		// Document xml = new DocumentStore().getDoc(uri);
 		VxmlDoc vxmlDoc = new VxmlDoc(entryPointUrl);
 		vxmlDoc.play();
 	}
@@ -47,7 +46,7 @@ public class VxmlBrowser {
 
 	public static void main(String[] args) throws VxmlException, URISyntaxException, Event {
 		VxmlBrowser vxmlBrowser = new VxmlBrowser();
-		vxmlBrowser.setEntryPointUrl("http://ivroww.qa1.orbztest.com/ivr/testing/fqa.vxml");
+		vxmlBrowser.setEntryPointUrl("http://localhost:8585/ivr/testing/sao.vxml");
 		vxmlBrowser.start();
 	}
 

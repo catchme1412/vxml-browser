@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.net.URISyntaxException;
+import java.util.Scanner;
 import java.util.concurrent.LinkedBlockingDeque;
 
 import com.vxml.browser.event.Event;
@@ -22,6 +23,8 @@ public class VxmlBrowserWrapper {
 	private LinkedBlockingDeque<String> keyInputList;
 
 	private static String baseUrl = "http://localhost:8080/vxml-browser";
+	
+	
 	public VxmlBrowserWrapper(VxmlBrowser vxmlBrowser) throws IOException {
 		keyInputList = new LinkedBlockingDeque<String>();
 		this.vxmlBrowser = vxmlBrowser;
@@ -83,7 +86,10 @@ public class VxmlBrowserWrapper {
 	}
 	
 	public static String getFullUri(String uri) {
-	    return getBaseUrl() + uri;
+	    if (!uri.startsWith("http")) {
+	        return getBaseUrl() + uri;
+	    }
+	    return uri;
 	}
 
 	public static String getBaseUrl() {
@@ -93,4 +99,11 @@ public class VxmlBrowserWrapper {
 	public static void setBaseUrl(String baseUrl) {
 		VxmlBrowserWrapper.baseUrl = baseUrl;
 	}
+
+    public void setDtmlInputSequence(String input, String delimiter) {
+        Scanner dtmfSource = new Scanner(input);
+        dtmfSource.useDelimiter(delimiter);
+        VxmlBrowser.getContext().setDtmfSource(dtmfSource);
+        
+    }
 }

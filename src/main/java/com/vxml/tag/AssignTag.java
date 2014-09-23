@@ -2,6 +2,8 @@ package com.vxml.tag;
 
 import org.w3c.dom.Node;
 
+import sun.org.mozilla.javascript.internal.Undefined;
+
 import com.vxml.core.browser.VxmlBrowser;
 
 public class AssignTag extends AbstractTag {
@@ -15,30 +17,28 @@ public class AssignTag extends AbstractTag {
     @Override
     public void startTag() {
         name = getAttribute("name");
-        VxmlBrowser.getContext().executeScript("var " + name);
+        VxmlBrowser.getContext().assignScriptVar(name, null);
     }
 
     @Override
     public void execute() {
         name = getAttribute("name");
-
         String expr = getAttribute("expr");
+        expr = cleanup(expr);
         if (expr != null) {
             Object exprResult = expr;
-            if (!(expr.endsWith("'") && expr.startsWith("'"))) {
-                exprResult = VxmlBrowser.getContext().executeScriptNullIfUndefined(expr);
+            Object val = VxmlBrowser.getContext().getScriptVar(expr);
+            if (!(val instanceof Undefined || val == null)) {
+                exprResult = val;
             }
-            if (exprResult instanceof String) {
-                String e = (String) exprResult;
-                if (!(e.startsWith("'") && e.startsWith("'"))) {
-                    e = "'" + e + "'";
-                }
-                VxmlBrowser.getContext().executeScript(name + "=" + e + "");
-            } else {
-                VxmlBrowser.getContext().assignScriptVar(name, exprResult);
-            }
+            VxmlBrowser.getContext().assignScriptVar(name, exprResult);
         }
-
     }
 
+    private String cleanup(String expr) {
+       if (expr.startsWith("'") && expr.endsWith("'")) {
+           return expr.substring(1, expr.length() -1);
+       }
+       return expr;
+    }
 }

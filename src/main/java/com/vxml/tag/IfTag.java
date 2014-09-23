@@ -25,6 +25,7 @@ public class IfTag extends AbstractTag {
 	public void execute() {
 		String cond = getAttribute("cond");
 		isIfConditionTrue = (Boolean) VxmlBrowser.getContext().executeScript(cond);
+		isIfConditionTrue = isIfConditionTrue != null && isIfConditionTrue;
 		markIfCondition(isIfConditionTrue);
 		if (isIfConditionTrue) {
 			setSkipExecute(false);

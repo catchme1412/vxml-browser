@@ -1,0 +1,51 @@
+apply plugin: 'checkstyle'
+apply plugin: 'pmd'
+apply plugin: 'findbugs'
+
+checkstyle {
+    ignoreFailures = true
+}
+
+findbugs {
+	effort = 'max'
+	reportLevel = 'low'
+    ignoreFailures = true
+}
+
+pmd {
+    ignoreFailures = true
+}
+
+task checkstyle(dependsOn: ['checkstyleMain', 'checkstyleTest', 'checkstyleServicetest']) {
+	description 'Runs checkstyle on all source sets.'
+	group = 'Verification'
+}
+
+task pmd(dependsOn: ['pmdMain', 'pmdTest', 'pmdServicetest']) {
+	description 'Runs pmd on all source sets.'
+	group = 'Verification'
+}
+
+task findbugs(dependsOn: ['findbugsMain', 'findbugsTest', 'findbugsServicetest']) {
+	description 'Runs findbugs on all source sets.'
+	group = 'Verification'
+}
+
+// delay configuration until after the selenium and simulator source sets are created
+gradle.taskGraph.whenReady {
+	tasks.withType(FindBugs).each {
+		it.reports.xml.enabled = false
+		it.reports.html.enabled = true
+	}
+}
+
+gradle.taskGraph.afterTask { Task task ->
+	if (task.name.startsWith('checkstyle') && task.name != 'checkstyle') {
+		def sourceSet = task.name.substring(10).toLowerCase()
+		def xmlReport = "$buildDir/reports/checkstyle/${sourceSet}.xml"
+		if (file(xmlReport).exists()) {
+			ant.xslt(in: xmlReport, style: 'config/checkstyle/checkstyle.xsl',
+				out: "$buildDir/reports/checkstyle/${sourceSet}.html")
+		}
+	}
+}

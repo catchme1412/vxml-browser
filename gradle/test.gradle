@@ -1,0 +1,38 @@
+sourceSets {
+	test {
+		java.srcDir file('src/mock/java')
+        resources.srcDir file('src/mock/resources')
+	}
+}
+
+configurations {
+	// these conflict with org.easymock:easymock:3.1
+	testCompile.exclude group: 'easymock', module: 'easymock'
+	testCompile.exclude group: 'easymock', module: 'easymockclassextension'
+}
+
+dependencies {
+	testCompile group: 'org.easymock', name: 'easymock', version: '3.1'
+	testCompile group: 'com.orbitz.web.framework', name: 'platform-wf-mock', version: '32.38'
+	testCompile group: 'org.springframework', name: 'spring-test', version: '3.0.7.RELEASE'
+	testCompile group: 'junit', name: 'junit', version: '4.11'
+	testCompile group: 'com.orbitz.junit', name: 'junit-lib', version: '1.6'
+	testCompile group: 'jdepend', name: 'jdepend', version: '2.9.1'
+	testCompile group: 'com.orbitz.config', name: 'mock-config-lib', version: '7.9'
+	testCompile group: 'org.mockito', name: 'mockito-all', version: '1.8.5'
+	testCompile group: 'com.orbitz.trip', name: 'mock-svc-trip', version: '11.1'
+	testCompile group: 'com.orbitz.protos', name: 'protos-model', version: '1.396'
+	//testCompile group: 'net.sf.jstester', name: 'jstester', version: '1.4'
+	testRuntime group: 'org.codehaus.castor', name: 'castor', version: '1.2'
+	testRuntime group: 'gsbase', name: 'gsbase', version: '2.0.1'
+}
+
+tasks.test.dependsOn += [installSchemas, installRefData]
+
+test {
+	jvmArgs '-XX:MaxPermSize=512m'
+	jvmArgs '-Dlog4j.configuration=webapp_tests_log4j.xml'
+	include '**/*Test.class'
+}
+
+tasks.processTestResources.dependsOn += [installConfig]

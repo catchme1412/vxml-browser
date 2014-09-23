@@ -16,8 +16,11 @@ public class NativeCommand {
 
     public Process play(String waveFile) {
         StringBuffer output = new StringBuffer();
+        //download the audio file
         String[] cmd = { "/bin/sh", "-c", "wget " + waveFile + " -O /tmp/ivr.wav" };
         execute(output, cmd);
+
+        //play the audio file
         String[] cmdWav = { "/bin/sh", "-c", "play /tmp/ivr.wav" };
         return execute(output, cmdWav);
 

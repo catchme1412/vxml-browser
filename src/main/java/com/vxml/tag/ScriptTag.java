@@ -34,7 +34,6 @@ public class ScriptTag extends AbstractTag {
             }
         } else {
             VxmlBrowser.getContext().executeScript(getNode().getTextContent());
-            
         }
     }
     

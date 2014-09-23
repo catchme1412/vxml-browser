@@ -10,10 +10,16 @@ public class AudioTag extends AbstractTag {
 
 	private String audioUrl;
 	
+	private boolean isSlientBackup;
+	
     public AudioTag(Node node) {
         super(node);
     }
 
+    @Override
+    public void startTag() {
+        isSlientBackup = VxmlExecutionContext.isSlientMode();
+    }
     @Override
     public void execute() {
         String src = getAttribute("src");
@@ -29,7 +35,7 @@ public class AudioTag extends AbstractTag {
                 System.out.println("Audio:" + audioUrl);
                 try {
                 	audioUrl = audioUrl.replaceAll("audio.en-US.tellme.com", "ivraudio.orbitz.net");
-                    new NativeCommand().play(audioUrl);
+                	VxmlBrowser.getContext().playAudio(audioUrl);
                     VxmlExecutionContext.setSlientMode(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -42,7 +48,7 @@ public class AudioTag extends AbstractTag {
 
     @Override
     public void endTag() {
-        VxmlExecutionContext.setSlientMode(true);
+        VxmlExecutionContext.setSlientMode(isSlientBackup);
     }
 
 	public String getAudioUrl() {

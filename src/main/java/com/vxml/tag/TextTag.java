@@ -3,6 +3,7 @@ package com.vxml.tag;
 import org.w3c.dom.Node;
 
 import com.vxml.audio.NativeCommand;
+import com.vxml.core.browser.VxmlBrowser;
 import com.vxml.core.browser.VxmlExecutionContext;
 
 public class TextTag extends AbstractTag {
@@ -20,7 +21,7 @@ public class TextTag extends AbstractTag {
 		if (!text.isEmpty() && !VxmlExecutionContext.isSlientMode()) {
 			try {
 			    System.out.println(text);
-				new NativeCommand().speak(text);
+				VxmlBrowser.getContext().playTTS(text);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

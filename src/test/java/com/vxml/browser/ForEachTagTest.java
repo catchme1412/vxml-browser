@@ -13,7 +13,6 @@ import org.testng.annotations.Test;
 import com.vxml.browser.event.Event;
 import com.vxml.core.VxmlException;
 import com.vxml.core.browser.VxmlBrowser;
-import com.vxml.tag.AbstractTag;
 
 public class ForEachTagTest {
 

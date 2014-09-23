@@ -19,7 +19,7 @@ The core classes of the frameworks are
  
 TODO
 ====
-1. Implement the Unit testing options
-2. Create an IDE for a better visualization
+1. Implement the Unit testing options (completed)
+2. Create an IDE for a better visualization 
 3. Integrate with eclipse plugin
 

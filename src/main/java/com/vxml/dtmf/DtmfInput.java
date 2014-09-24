@@ -49,7 +49,9 @@ public class DtmfInput {
 		public void run() {
 			while (!isInterrupted()) {
 				input = readInput();
-				break;
+				if (input != null) {
+					break;
+				}
 			}
 			if (input == null) {
 				System.out.println("Aborted.");

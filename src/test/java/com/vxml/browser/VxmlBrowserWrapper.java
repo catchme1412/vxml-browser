@@ -8,7 +8,6 @@ import java.util.concurrent.LinkedBlockingDeque;
 import com.vxml.browser.event.Event;
 import com.vxml.core.VxmlException;
 import com.vxml.core.browser.VxmlBrowser;
-import com.vxml.core.browser.VxmlExecutionContext;
 import com.vxml.parser.event.OutputListener;
 import com.vxml.tag.AbstractTag;
 import com.vxml.tag.Tag;
@@ -29,7 +28,7 @@ public class VxmlBrowserWrapper {
 	public VxmlBrowserWrapper(VxmlBrowser vxmlBrowser) throws IOException {
 		keyInputList = new LinkedBlockingDeque<String>();
 		this.vxmlBrowser = vxmlBrowser;
-		VxmlExecutionContext.setSlientMode(true);
+//		VxmlBrowser.getContext().setSlientMode(true);
 
 		queue = new LinkedBlockingDeque<String>();
 		audioEventListener = new OutputListener() {
@@ -83,6 +82,10 @@ public class VxmlBrowserWrapper {
 		VxmlBrowserWrapper.baseUrl = baseUrl;
 	}
 
+	public void setDtmfInput(String input) {
+		setDtmfInputSequence(input, " ");
+        
+    }
     public void setDtmfInputSequence(String input, String delimiter) {
         Scanner dtmfSource = new Scanner(input);
         dtmfSource.useDelimiter(delimiter);

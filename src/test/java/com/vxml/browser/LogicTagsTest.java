@@ -13,7 +13,6 @@ import org.testng.annotations.Test;
 import com.vxml.browser.event.Event;
 import com.vxml.core.VxmlException;
 import com.vxml.core.browser.VxmlBrowser;
-import com.vxml.tag.AbstractTag;
 
 public class LogicTagsTest {
 
@@ -42,10 +41,9 @@ public class LogicTagsTest {
         
         vxmlBrowser.setEntryPointUrl(VxmlBrowserWrapper.getFullUri("/ifElseIfElse.vxml"));
 
-        dtmfSource = new Scanner(DTMF_INPUT);
-        dtmfSource.useDelimiter(",");
-        VxmlBrowser.getContext().setDtmfSource(dtmfSource);
+        
         VxmlBrowserWrapper verifier = new VxmlBrowserWrapper(vxmlBrowser);
+        verifier.setDtmfInput(DTMF_INPUT);
         verifier.start();
         AssertJUnit.assertEquals(verifier.nextOuput(), "TTS:Input 1 or 2 or something else?");
         AssertJUnit.assertEquals(verifier.nextOuput(), "TTS:Input is one");
@@ -57,10 +55,8 @@ public class LogicTagsTest {
         
         vxmlBrowser.setEntryPointUrl(VxmlBrowserWrapper.getFullUri("/ifElseIfElse.vxml"));
 
-        dtmfSource = new Scanner(DTMF_INPUT);
-        dtmfSource.useDelimiter(",");
-        VxmlBrowser.getContext().setDtmfSource(dtmfSource);
         VxmlBrowserWrapper verifier = new VxmlBrowserWrapper(vxmlBrowser);
+        verifier.setDtmfInput(DTMF_INPUT);
         verifier.start();
         AssertJUnit.assertEquals("TTS:Input 1 or 2 or something else?", verifier.nextOuput());
         AssertJUnit.assertEquals("TTS:Input is two", verifier.nextOuput());
@@ -74,11 +70,10 @@ public class LogicTagsTest {
         
         vxmlBrowser.setEntryPointUrl(VxmlBrowserWrapper.getFullUri("/nestedIf.vxml"));
 
-        dtmfSource = new Scanner(DTMF_INPUT);
-        dtmfSource.useDelimiter(",");
-        VxmlBrowser.getContext().setDtmfSource(dtmfSource);
         VxmlBrowserWrapper verifier = new VxmlBrowserWrapper(vxmlBrowser);
+        verifier.setDtmfInputSequence(DTMF_INPUT, ",");
         verifier.start();
+        
         AssertJUnit.assertEquals("TTS:Input first if", verifier.nextOuput());
         AssertJUnit.assertEquals("TTS:Input second if", verifier.nextOuput());
         AssertJUnit.assertEquals("TTS:Input nested Else If", verifier.nextOuput());

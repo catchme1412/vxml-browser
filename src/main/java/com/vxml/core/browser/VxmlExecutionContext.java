@@ -7,6 +7,7 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
 
 import javax.script.ScriptException;
 
@@ -14,12 +15,11 @@ import com.vxml.audio.NativeCommand;
 import com.vxml.core.VxmlException;
 import com.vxml.parser.event.EventHandler;
 import com.vxml.tag.FormTag;
-import com.vxml.tag.Tag;
 
 public class VxmlExecutionContext {
 
     private ScriptExecutionContext scriptExecutionContext;
-    private static boolean isSlientMode = true;
+    private boolean isSlientMode;
     private static String docBaseUrl;
     private EventHandler eventHandler;
     private NativeCommand nativeCommand;
@@ -93,7 +93,7 @@ public class VxmlExecutionContext {
         this.eventHandler = eventHandler;
     }
 
-    public void storeTag(String id, Tag tag) {
+    public void storeTag(String id, FormTag tag) {
         formMap.put(id, tag);
     }
     
@@ -122,19 +122,19 @@ public class VxmlExecutionContext {
         
     }
 
-    public static boolean isSlientMode() {
+    public boolean isSlientMode() {
         return isSlientMode;
     }
 
-    public static void setSlientMode(boolean isSlientMode) {
-        VxmlExecutionContext.isSlientMode = isSlientMode;
+    public void setSlientMode(boolean isSlientMode) {
+        this.isSlientMode = isSlientMode;
     }
 
-    public void playAudio(String audioUrl) {
-        nativeCommand.play(audioUrl);
+    public void playAudio(String audioUrl) throws InterruptedException, ExecutionException {
+        nativeCommand.playAudioFile(audioUrl);
     }
 
-    public void playTTS(String text) throws IOException, InterruptedException {
+    public void playTTS(String text) throws IOException, InterruptedException, ExecutionException {
         nativeCommand.speak(text);
     }
 }

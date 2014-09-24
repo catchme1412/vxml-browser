@@ -2,7 +2,7 @@ package com.vxml.tag;
 
 import org.w3c.dom.Node;
 
-import com.vxml.core.browser.VxmlExecutionContext;
+import com.vxml.core.browser.VxmlBrowser;
 
 public class ItemTag extends AbstractTag {
 
@@ -14,8 +14,8 @@ public class ItemTag extends AbstractTag {
 
     @Override
     public void startTag() {
-        isSlientModeBackup = VxmlExecutionContext.isSlientMode();
-        VxmlExecutionContext.setSlientMode(true);
+        isSlientModeBackup = VxmlBrowser.getContext().isSlientMode();
+        VxmlBrowser.getContext().setSlientMode(true);
     }
 
     @Override
@@ -23,6 +23,6 @@ public class ItemTag extends AbstractTag {
 
     @Override
     public void endTag() {
-        VxmlExecutionContext.setSlientMode(isSlientModeBackup);
+    	VxmlBrowser.getContext().setSlientMode(isSlientModeBackup);
     }
 }

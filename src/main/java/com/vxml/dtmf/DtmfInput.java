@@ -2,81 +2,73 @@ package com.vxml.dtmf;
 
 import java.util.Scanner;
 
-import com.vxml.core.browser.VxmlExecutionContext;
+import com.vxml.core.browser.VxmlBrowser;
 
 public class DtmfInput {
 
-    private Object input;
+	private Object input;
 
-    private Scanner stdin;
+	private Scanner stdin;
 
-    public DtmfInput(Scanner in) {
-        stdin = in;
-    }
+	public DtmfInput(Scanner in) {
+		stdin = in;
+	}
 
-    public String read() {
-        String value = null;
-        System.out.print("Input>");
-        try {
-            if (stdin.hasNext()) {
-                value = stdin.next();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return value;
-    }
+	public String read() {
+		String value = null;
+		System.out.print("Input>");
+		if (stdin.hasNext()) {
+			value = stdin.next();
+		}
+		return value;
+	}
 
-    public Object readWithTimeOut(int timeout) {
-        System.out.print("Input(wait " + (timeout / 1000) + " sec)>");
-        ReadThread myThread = new ReadThread();
-        myThread.start();
-        if(!VxmlExecutionContext.isSlientMode()) {
-            try {
-                Thread.sleep(timeout);
-            } catch (InterruptedException e) {
-                // Do nothing
-            }
-        } else {
-        	try {
-				myThread.join();
+	public Object readWithTimeOut(int timeout) {
+		System.out.print("Input(wait " + (timeout / 1000) + " sec)>");
+		ReadThread myThread = new ReadThread();
+		myThread.start();
+		sleepIfNeeded(timeout);
+		myThread.interrupt();
+		
+		return input;
+	}
+
+	private void sleepIfNeeded(int timeout) {
+		if (!VxmlBrowser.getContext().isSlientMode()) {
+			try {
+				Thread.sleep(timeout);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				// Do nothing
 			}
-        }
+		}
+	}
 
-        myThread.interrupt();
-        // }
-        return input;
-    }
+	private class ReadThread extends Thread {
 
-    private class ReadThread extends Thread {
+		@Override
+		public void run() {
+			while (!isInterrupted()) {
+				input = readInput();
+				break;
+			}
+			if (input == null) {
+				System.out.println("Aborted.");
+			}
+		}
 
-        @Override
-        public void run() {
-            while (!isInterrupted()) {
-                // try {
-                if (stdin.hasNext()) {
-                	if (stdin.hasNextBoolean()) {
-                		input = stdin.nextBoolean();
-                	} if (stdin.hasNextInt()) {
-                	    input = stdin.nextInt();
-                	} else {
-                		input = stdin.next();
-                	}
-                    System.out.println("Got: " + input);
-                    break;
-                }
-                // } catch (IOException e) {
-                // e.printStackTrace();
-                // } finally {
-                //
-                // }
-            }
-            if (input == null) {
-                System.out.println("Aborted.");
-            }
-        }
-    }
+		private Object readInput() {
+			Object input = null;
+			if (stdin.hasNext()) {
+				if (stdin.hasNextBoolean()) {
+					input = stdin.nextBoolean();
+				} else if (stdin.hasNextInt()) {
+					input = stdin.nextInt();
+				} else {
+					input = stdin.next();
+				}
+				System.out.println("Got: " + input);
+			}
+			return input;
+		}
+	}
 }

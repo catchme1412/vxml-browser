@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vxml version="2.1">
+   <form id="F_1">
+      <block>
+         <prompt>Audio file demonstration</prompt>
+         <audio src="/testAudio.wav" maxage="500" maxstale="1000" />
+      </block>
+   </form>
+</vxml>

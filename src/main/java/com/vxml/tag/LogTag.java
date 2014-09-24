@@ -4,7 +4,7 @@ import java.util.logging.Logger;
 
 import org.w3c.dom.Node;
 
-import com.vxml.core.browser.VxmlExecutionContext;
+import com.vxml.core.browser.VxmlBrowser;
 
 public class LogTag extends AbstractTag {
 
@@ -16,7 +16,7 @@ public class LogTag extends AbstractTag {
 
     @Override
     public void startTag() {
-        VxmlExecutionContext.setSlientMode(true);
+    	VxmlBrowser.getContext().setSlientMode(true);
     }
 
     @Override
@@ -27,6 +27,6 @@ public class LogTag extends AbstractTag {
 
     @Override
     public void endTag() {
-        VxmlExecutionContext.setSlientMode(false);
+    	VxmlBrowser.getContext().setSlientMode(false);
     }
 }

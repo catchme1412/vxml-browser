@@ -6,7 +6,6 @@ import java.net.URI;
 import org.w3c.dom.Node;
 
 import com.vxml.core.browser.VxmlBrowser;
-import com.vxml.core.browser.VxmlExecutionContext;
 import com.vxml.store.DocumentStore;
 
 public class ScriptTag extends AbstractTag {
@@ -17,7 +16,7 @@ public class ScriptTag extends AbstractTag {
 
     @Override
     public void startTag() {
-        VxmlExecutionContext.setSlientMode(true);
+    	VxmlBrowser.getContext().setSlientMode(true);
     }
 
     @Override
@@ -39,7 +38,7 @@ public class ScriptTag extends AbstractTag {
     
     @Override
     public void endTag() {
-        VxmlExecutionContext.setSlientMode(false);
+    	VxmlBrowser.getContext().setSlientMode(false);
     }
 
 }

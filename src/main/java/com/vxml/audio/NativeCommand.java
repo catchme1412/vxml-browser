@@ -1,52 +1,53 @@
 package com.vxml.audio;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class NativeCommand {
 
-    public void speak(String text) throws IOException, InterruptedException {
-        StringBuffer output = new StringBuffer();
-        System.out.println("SPEAK:" + text);
-        String[] cmd = { "/bin/sh", "-c", "echo '" + text + "' | festival --tts" };
+	private static ExecutorService executorService = Executors.newFixedThreadPool(1);
+	private static Process currentProcess;
 
-        execute(output, cmd);
-    }
+	//Doesn't wait for the process to finish
+	public Process speak(String text) throws IOException, InterruptedException, ExecutionException {
+		cancellCurrentTask();
+		System.out.println("SPEAK:" + text);
+		String[] cmd = { "/bin/sh", "-c", "echo '" + text + "' | festival --tts" };
+		Future<Process> currentFuture = executorService.submit(new OutputCallable(cmd));
+		currentProcess = currentFuture.get();
+		return currentProcess;
+	}
 
-    public Process play(String waveFile) {
-        StringBuffer output = new StringBuffer();
-        //download the audio file
-        String[] cmd = { "/bin/sh", "-c", "wget " + waveFile + " -O /tmp/ivr.wav" };
-        execute(output, cmd);
+	//Doesn't wait for the process to finish
+	public Process playAudioFile(String waveFile) throws InterruptedException, ExecutionException {
+		cancellCurrentTask();
+		String[] cmdWav = { "/bin/sh", "-c", "play " + waveFile };
+		Future<Process> currentFuture = executorService.submit(new OutputCallable(cmdWav));
+		currentProcess = currentFuture.get();
+		return currentProcess;
+	}
 
-        //play the audio file
-        String[] cmdWav = { "/bin/sh", "-c", "play /tmp/ivr.wav" };
-        return execute(output, cmdWav);
+	private void cancellCurrentTask() {
+		try {
+			if (currentProcess != null) {
+				currentProcess.destroy();
+			}
+		} catch (Exception e) {
+			//Do nothing
+		}
+	}
 
-    }
 
-    private Process execute(StringBuffer output, String[] cmd) {
-        try {
-            Process p = Runtime.getRuntime().exec(cmd);
-            
-            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+	public static void main(String[] args) throws Exception {
 
-            String line = "";
-            while ((line = reader.readLine()) != null) {
-                output.append(line + "\n");
-            }
-            return p;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static void main(String[] args) throws Exception {
-        new NativeCommand().speak("testing ");
-        Process p = new NativeCommand().play("http://ivraudio.orbitz.net/common-audio/posOptions.wav");
-        p.destroy();
-    }
-
+		Process p = new NativeCommand().playAudioFile("http://localhost:8080/vxml-browser/testAudio.wav");
+		// p.waitFor();
+		Thread.sleep(5000);
+		p = new NativeCommand().playAudioFile("http://localhost:8080/vxml-browser/testAudio.wav");
+		Thread.sleep(5000);
+		p.destroy();
+	}
 }

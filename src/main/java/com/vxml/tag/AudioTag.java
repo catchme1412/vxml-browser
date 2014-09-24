@@ -2,24 +2,17 @@ package com.vxml.tag;
 
 import org.w3c.dom.Node;
 
-import com.vxml.audio.NativeCommand;
 import com.vxml.core.browser.VxmlBrowser;
-import com.vxml.core.browser.VxmlExecutionContext;
 
 public class AudioTag extends AbstractTag {
 
 	private String audioUrl;
 	
-	private boolean isSlientBackup;
 	
     public AudioTag(Node node) {
         super(node);
     }
 
-    @Override
-    public void startTag() {
-        isSlientBackup = VxmlExecutionContext.isSlientMode();
-    }
     @Override
     public void execute() {
         String src = getAttribute("src");
@@ -36,7 +29,6 @@ public class AudioTag extends AbstractTag {
                 try {
                 	audioUrl = audioUrl.replaceAll("audio.en-US.tellme.com", "ivraudio.orbitz.net");
                 	VxmlBrowser.getContext().playAudio(audioUrl);
-                    VxmlExecutionContext.setSlientMode(true);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -44,11 +36,6 @@ public class AudioTag extends AbstractTag {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void endTag() {
-        VxmlExecutionContext.setSlientMode(isSlientBackup);
     }
 
 	public String getAudioUrl() {

@@ -1,8 +1,6 @@
 package com.vxml.browser;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.net.URISyntaxException;
 import java.util.Scanner;
 import java.util.concurrent.LinkedBlockingDeque;
@@ -15,6 +13,9 @@ import com.vxml.parser.event.OutputListener;
 import com.vxml.tag.AbstractTag;
 import com.vxml.tag.Tag;
 
+/**
+ * Used in service testing.
+ */
 public class VxmlBrowserWrapper {
 	OutputListener audioEventListener;
 	LinkedBlockingDeque<String> queue;
@@ -67,24 +68,6 @@ public class VxmlBrowserWrapper {
 		return null;
 	}
 
-	class FakeInputStream extends BufferedReader {
-
-		public FakeInputStream(Reader in) {
-			super(in);
-		}
-
-		@Override
-		public String readLine() throws IOException {
-			return keyInputList.pop();
-		}
-
-	}
-
-	public void resume() {
-		// TODO Auto-generated method stub
-		
-	}
-	
 	public static String getFullUri(String uri) {
 	    if (!uri.startsWith("http")) {
 	        return getBaseUrl() + uri;
@@ -100,7 +83,7 @@ public class VxmlBrowserWrapper {
 		VxmlBrowserWrapper.baseUrl = baseUrl;
 	}
 
-    public void setDtmlInputSequence(String input, String delimiter) {
+    public void setDtmfInputSequence(String input, String delimiter) {
         Scanner dtmfSource = new Scanner(input);
         dtmfSource.useDelimiter(delimiter);
         VxmlBrowser.getContext().setDtmfSource(dtmfSource);

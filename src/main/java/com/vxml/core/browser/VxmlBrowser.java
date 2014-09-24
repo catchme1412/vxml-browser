@@ -13,25 +13,23 @@ import com.vxml.parser.VxmlDoc;
 public class VxmlBrowser {
 
 	private String entryPointUrl;
-	//singleton instance
-	private static VxmlExecutionContext context;
-	
+	// singleton instance
+	private static VxmlExecutionContext singletonExecutionContext;
+
 	public VxmlBrowser() {
-		if (context != null) {
-			try {
-				context = new VxmlExecutionContext();
-				//default input is from keyboard
-				context.setDtmfSource(new Scanner(System.in));
-			} catch (ScriptException e) {
-				e.printStackTrace();
-			}
+		try {
+			singletonExecutionContext = new VxmlExecutionContext();
+			// default input is from keyboard
+			singletonExecutionContext.setDtmfSource(new Scanner(System.in));
+		} catch (ScriptException e) {
+			e.printStackTrace();
 		}
 	}
 
 	public void start() throws VxmlException, URISyntaxException, Event {
 		URI uri = new URI(entryPointUrl);
-		context.setDocBaseUrl(uri.getScheme() + "://" + uri.getAuthority());
-		
+		VxmlExecutionContext.setDocBaseUrl(uri.getScheme() + "://" + uri.getAuthority());
+
 		VxmlDoc vxmlDoc = new VxmlDoc(entryPointUrl);
 		vxmlDoc.play();
 	}
@@ -51,18 +49,18 @@ public class VxmlBrowser {
 	}
 
 	public static VxmlExecutionContext getContext() {
-		if (context == null) {
+		if (singletonExecutionContext == null) {
 			try {
-				context = new VxmlExecutionContext();
+				singletonExecutionContext = new VxmlExecutionContext();
 			} catch (ScriptException e) {
 				e.printStackTrace();
 			}
 		}
-		return context;
+		return singletonExecutionContext;
 	}
 
 	public void setContext(VxmlExecutionContext context) {
-		this.context = context;
+		VxmlBrowser.singletonExecutionContext = context;
 	}
 
 }

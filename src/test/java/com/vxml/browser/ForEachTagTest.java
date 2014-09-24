@@ -28,7 +28,6 @@ public class ForEachTagTest {
 	@AfterMethod
 	public void cleanUp() {
 		if (dtmfSource != null) {
-
 			dtmfSource.close();
 		}
 	}

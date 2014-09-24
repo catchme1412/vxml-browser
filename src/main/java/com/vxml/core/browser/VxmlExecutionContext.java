@@ -13,6 +13,7 @@ import javax.script.ScriptException;
 import com.vxml.audio.NativeCommand;
 import com.vxml.core.VxmlException;
 import com.vxml.parser.event.EventHandler;
+import com.vxml.tag.FormTag;
 import com.vxml.tag.Tag;
 
 public class VxmlExecutionContext {
@@ -26,7 +27,7 @@ public class VxmlExecutionContext {
     private boolean isSuspended;
     
     //mainly for form when referred from goto
-    private Map<String, Tag> tagMap;
+    private Map<String, FormTag> formMap;
 	private Scanner dtmfSource; 
 
     public VxmlExecutionContext() throws ScriptException {
@@ -34,7 +35,7 @@ public class VxmlExecutionContext {
         eventHandler = new EventHandler();
         //default
         dtmfSource = new Scanner(System.in);
-        tagMap = new HashMap<String, Tag>();
+        formMap = new HashMap<String, FormTag>();
         nativeCommand = new NativeCommand();
     }
 
@@ -93,11 +94,11 @@ public class VxmlExecutionContext {
     }
 
     public void storeTag(String id, Tag tag) {
-        tagMap.put(id, tag);
+        formMap.put(id, tag);
     }
     
-    public Tag getTag(String id) {
-        return tagMap.get(id);
+    public FormTag getTag(String formId) {
+        return formMap.get(formId);
     }
 
 	public Scanner getDtmfSource() {

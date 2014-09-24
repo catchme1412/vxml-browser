@@ -40,11 +40,12 @@ public class OrbitzTest {
     public void testIf() throws VxmlException, URISyntaxException, Event, IOException {
         final String DTMF_INPUT = "1,-,-,123,123,yes";
         
-        vxmlBrowser.setEntryPointUrl(VxmlBrowserWrapper.getFullUri("http://localhost:8585/ivr/testing/sao.vxml"));
+        vxmlBrowser.setEntryPointUrl("http://localhost:8585/ivr/testing/sao.vxml");
 
         VxmlBrowserWrapper verifier = new VxmlBrowserWrapper(vxmlBrowser);
-        verifier.setDtmlInputSequence(DTMF_INPUT, ",");
+        verifier.setDtmfInputSequence(DTMF_INPUT, ",");
         verifier.start();
+        
         AssertJUnit.assertEquals(verifier.nextOuput(), "TTS:Input 1 or 2 or something else?");
         AssertJUnit.assertEquals(verifier.nextOuput(), "TTS:Input is one");
         AssertJUnit.assertEquals(verifier.nextOuput(), "TTS:Input is one");

@@ -130,8 +130,9 @@ public class VxmlExecutionContext {
         this.isSlientMode = isSlientMode;
     }
 
-    public void playAudio(String audioUrl) throws InterruptedException, ExecutionException, IOException {
+    public boolean playAudio(String audioUrl) throws InterruptedException, ExecutionException, IOException {
         Process p = nativeCommand.play(audioUrl);
+        return p.exitValue() == 0;
     }
 
     public void playTTS(String text) throws IOException, InterruptedException, ExecutionException {

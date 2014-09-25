@@ -24,32 +24,29 @@ public class AssignTag extends AbstractTag {
     public void execute() {
         name = getAttribute("name");
         String expr = getAttribute("expr");
-        expr = cleanup(expr);
+//        expr = cleanup(expr);
         if (expr != null) {
+
+            // TODO clean up the logic
             Object exprResult = expr;
             Object val = VxmlBrowser.getContext().getScriptVar(expr);
             if (!(val instanceof Undefined || val == null)) {
                 exprResult = val;
-                
-            } else if (val == null){
+            } else if (val == null) {
                 val = VxmlBrowser.getContext().executeScript(expr);
                 if (val != null) {
                     exprResult = val;
                 }
             }
-            
+
             VxmlBrowser.getContext().assignScriptVar(name, exprResult);
-            if ("uiRecordLocator".equals(name)) {
-                Object t = VxmlBrowser.getContext().getScriptVar(name);
-                System.out.println(t);
-            }
         }
     }
 
     private String cleanup(String expr) {
-       if (expr.startsWith("'") && expr.endsWith("'")) {
-           return expr.substring(1, expr.length() -1);
-       }
-       return expr;
+        if (expr.startsWith("'") && expr.endsWith("'")) {
+            return expr.substring(1, expr.length() - 1);
+        }
+        return expr;
     }
 }

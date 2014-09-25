@@ -16,7 +16,6 @@ public class AudioTag extends AbstractTag {
 
     @Override
     public void startTag() {
-        // TODO Auto-generated method stub
         isSlientBackup = VxmlBrowser.getContext().isSlientMode();
     }
     
@@ -35,8 +34,12 @@ public class AudioTag extends AbstractTag {
                 System.out.println("Audio:" + audioUrl);
                 try {
                 	audioUrl = audioUrl.replaceAll("audio.en-US.tellme.com", "ivraudio.orbitz.net");
-                	VxmlBrowser.getContext().playAudio(audioUrl);
-                	VxmlBrowser.getContext().setSlientMode(true);
+                	boolean isPlayed = VxmlBrowser.getContext().playAudio(audioUrl);
+                	if(isPlayed) {
+                	    VxmlBrowser.getContext().setSlientMode(true);
+                	} else {
+                	    VxmlBrowser.getContext().setSlientMode(false);
+                	}
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

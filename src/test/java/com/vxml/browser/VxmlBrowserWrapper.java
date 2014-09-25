@@ -23,7 +23,7 @@ public class VxmlBrowserWrapper {
 
 	private LinkedBlockingDeque<String> keyInputList;
 
-	private static String baseUrl = "http://localhost:8080/vxml-browser";
+	private static String baseUrl = "http://localhost:8082/vxml-browser";
 	
 	
 	public VxmlBrowserWrapper(VxmlBrowser vxmlBrowser) throws IOException {

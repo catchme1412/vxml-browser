@@ -26,6 +26,8 @@ public class VarTag extends AbstractTag {
             if (value != null && !(value instanceof Undefined)) {
                 VxmlBrowser.getContext().assignScriptVar(name, value);
             }
+        } else {
+            VxmlBrowser.getContext().assignScriptVar(name, null);
         }
     }
 

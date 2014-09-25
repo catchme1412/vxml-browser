@@ -38,12 +38,13 @@ public class OrbitzTest {
 
     @Test
     public void testIf() throws VxmlException, URISyntaxException, Event, IOException {
-        final String DTMF_INPUT = "1,-,-,123,123,yes";
+        final String DTMF_INPUT = "1,-,-,0916087224,123,yes";
         
         vxmlBrowser.setEntryPointUrl("http://localhost:8585/ivr/testing/sao.vxml");
 
         VxmlBrowserWrapper verifier = new VxmlBrowserWrapper(vxmlBrowser);
         verifier.setDtmfInputSequence(DTMF_INPUT, ",");
+        vxmlBrowser.getContext().setSlientMode(true);
         verifier.start();
         
         AssertJUnit.assertEquals(verifier.nextOuput(), "TTS:Input 1 or 2 or something else?");

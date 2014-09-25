@@ -29,7 +29,7 @@ public class VxmlBrowserWrapper {
 	public VxmlBrowserWrapper(VxmlBrowser vxmlBrowser) throws IOException {
 		keyInputList = new LinkedBlockingDeque<String>();
 		this.vxmlBrowser = vxmlBrowser;
-		VxmlExecutionContext.setSlientMode(true);
+//		VxmlExecutionContext.setSlientMode(true);
 
 		queue = new LinkedBlockingDeque<String>();
 		audioEventListener = new OutputListener() {

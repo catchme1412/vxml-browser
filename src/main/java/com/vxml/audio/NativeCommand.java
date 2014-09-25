@@ -1,53 +1,62 @@
 package com.vxml.audio;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class NativeCommand {
 
-	private static ExecutorService executorService = Executors.newFixedThreadPool(1);
-	private static Process currentProcess;
+    private static Process currentProcess;
+    
+    public Process speak(String text) throws IOException, InterruptedException {
+        System.out.println("SPEAK:" + text);
+        String[] cmd = { "/bin/sh", "-c", "echo '" + text + "' | festival --tts" };
 
-	//Doesn't wait for the process to finish
-	public Process speak(String text) throws IOException, InterruptedException, ExecutionException {
-		cancellCurrentTask();
-		System.out.println("SPEAK:" + text);
-		String[] cmd = { "/bin/sh", "-c", "echo '" + text + "' | festival --tts" };
-		Future<Process> currentFuture = executorService.submit(new OutputCallable(cmd));
-		currentProcess = currentFuture.get();
-		return currentProcess;
-	}
+        return execute(cmd);
+    }
 
-	//Doesn't wait for the process to finish
-	public Process playAudioFile(String waveFile) throws InterruptedException, ExecutionException {
-		cancellCurrentTask();
-		String[] cmdWav = { "/bin/sh", "-c", "play " + waveFile };
-		Future<Process> currentFuture = executorService.submit(new OutputCallable(cmdWav));
-		currentProcess = currentFuture.get();
-		return currentProcess;
-	}
+    
+    public static void destroyCurrentProcess() {
+        if (currentProcess != null) {
+            currentProcess.destroy(); 
+        }
+    }
+    
+    public Process play(String waveFile) throws InterruptedException, IOException {
+        waitForPreviousProcess();
+        //download the audio file
+        String[] cmd = { "/bin/sh", "-c", "wget " + waveFile + " -O /tmp/ivr.wav" };
+        Process p = execute(cmd);
+        p.waitFor();
+        //play the audio file
+        String[] cmdWav = { "/bin/sh", "-c", "play /tmp/ivr.wav" };
+        return execute(cmdWav);
 
-	private void cancellCurrentTask() {
-		try {
-			if (currentProcess != null) {
-				currentProcess.destroy();
-			}
-		} catch (Exception e) {
-			//Do nothing
-		}
-	}
+    }
 
+    private void waitForPreviousProcess() throws InterruptedException {
+        if (currentProcess != null) {
+            currentProcess.waitFor();
+        }
+        
+    }
 
-	public static void main(String[] args) throws Exception {
+    private Process execute(String[] cmd) throws IOException, InterruptedException {
+            currentProcess = Runtime.getRuntime().exec(cmd);
+            currentProcess.waitFor();
+//            ExecutorService executorService = Executors.newFixedThreadPool(1);
+//            Future<Process> f = executorService.submit(new ProcessWaitThread(currentProcess));
+            return currentProcess;
+    }
 
-		Process p = new NativeCommand().playAudioFile("http://localhost:8080/vxml-browser/testAudio.wav");
-		// p.waitFor();
-		Thread.sleep(5000);
-		p = new NativeCommand().playAudioFile("http://localhost:8080/vxml-browser/testAudio.wav");
-		Thread.sleep(5000);
-		p.destroy();
-	}
+    public static void main(String[] args) throws Exception {
+        new NativeCommand().speak("testing ");
+        Process p = new NativeCommand().play("http://ivraudio.orbitz.net/common-audio/posOptions.wav");
+//        ExecutorService executorService = Executors.newFixedThreadPool(1);
+//        Future<Process> f = executorService.submit(new ProcessWaitThread(p));
+        Thread.sleep(4500);
+        p.destroy();
+    }
+
 }

@@ -20,7 +20,7 @@ public class VxmlBrowser {
 		try {
 			singletonExecutionContext = new VxmlExecutionContext();
 			// default input is from keyboard
-			singletonExecutionContext.setDtmfSource(new Scanner(System.in));
+//			singletonExecutionContext.setDtmfSource(new Scanner(System.in));
 		} catch (ScriptException e) {
 			e.printStackTrace();
 		}

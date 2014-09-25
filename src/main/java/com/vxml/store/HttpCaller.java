@@ -25,7 +25,7 @@ public class HttpCaller implements Closeable {
 	}
 
 	public String doGet(String url) throws ClientProtocolException, IOException {
-	    System.err.println("FETCHING:" + url);
+//	    System.err.println("FETCHING:" + url);
 		HttpGet httpGet = new HttpGet(url);
 		// Create a custom response handler
 		ResponseHandler<String> responseHandler = new ResponseHandler<String>() {

@@ -49,7 +49,7 @@ public class DtmfInput {
 		public void run() {
 			while (!isInterrupted()) {
 				input = readInput();
-				break;
+//				break;
 			}
 			if (input == null) {
 				System.out.println("Aborted.");
@@ -57,17 +57,20 @@ public class DtmfInput {
 		}
 
 		private Object readInput() {
-			Object input = null;
-			if (stdin.hasNext()) {
-				if (stdin.hasNextBoolean()) {
-					input = stdin.nextBoolean();
-				} else if (stdin.hasNextInt()) {
-					input = stdin.nextInt();
-				} else {
-					input = stdin.next();
-				}
-				System.out.println("Got: " + input);
-			}
+		    try {
+		        if (stdin.hasNext()) {
+		            if (stdin.hasNextBoolean()) {
+		                input = stdin.nextBoolean();
+		            } else if (stdin.hasNextInt()) {
+		                input = stdin.nextInt();
+		            } else {
+		                input = stdin.next();
+		            }
+		            
+		            System.out.println("Got: " + input);
+		        }
+		    } catch(Exception e) {
+		    }
 			return input;
 		}
 	}

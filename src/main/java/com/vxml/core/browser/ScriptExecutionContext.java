@@ -6,12 +6,16 @@ import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.logging.Logger;
 
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+
+import com.vxml.store.DocumentStore;
 
 public class ScriptExecutionContext {
 
@@ -56,20 +60,20 @@ public class ScriptExecutionContext {
         return scriptEngine.get(var);
     }
 
-    public static void main(String[] args) throws ScriptException, FileNotFoundException, NoSuchMethodException {
+    public static void main(String[] args) throws ScriptException, FileNotFoundException, NoSuchMethodException, URISyntaxException {
 
         // Create ScriptEngineManager
         ScriptEngineManager engineManager = new ScriptEngineManager();
 
         // Create ScriptEngine
         ScriptEngine engine = engineManager.getEngineByName("ECMAScript");
-        engine.eval("var a = {\\\"A\\\":true};");
         // Create file and reader instance for reading the script file
-        File file = new File("/opt/orbitz/code/web-ivr/src/main/webapp/ivr/common/js/parseXmlWithAttrToObject.js");
-        Reader reader = new FileReader(file);
 
         // Pass the script file to the engine
-        engine.eval(reader);
+        URI uri = new URI("http://localhost:8585/common/js/convert_to_audio_url.js");
+        String string = new DocumentStore().getData(uri).toString();
+        engine.eval(string);
+        
         System.out.println("Java Program Output");
         // Create invocable instance
         Invocable invocable = (Invocable) engine;

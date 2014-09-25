@@ -30,8 +30,19 @@ public class AssignTag extends AbstractTag {
             Object val = VxmlBrowser.getContext().getScriptVar(expr);
             if (!(val instanceof Undefined || val == null)) {
                 exprResult = val;
+                
+            } else if (val == null){
+                val = VxmlBrowser.getContext().executeScript(expr);
+                if (val != null) {
+                    exprResult = val;
+                }
             }
+            
             VxmlBrowser.getContext().assignScriptVar(name, exprResult);
+            if ("uiRecordLocator".equals(name)) {
+                Object t = VxmlBrowser.getContext().getScriptVar(name);
+                System.out.println(t);
+            }
         }
     }
 

@@ -40,6 +40,12 @@ public class VxmlScriptEngine {
 	}
 
 	public void put(String key, Object val) {
+	    if ("recordLocatorAvailable".equals(key)) {
+	        System.out.println("VVVVVVVVVVVV"+ val);
+	    } 
+	    if ("uiRecordLocator".equals(key)) {
+            System.out.println("uiRecordLocator"+ val);
+        }
 		scriptEngine.put(key, val);
 	}
 

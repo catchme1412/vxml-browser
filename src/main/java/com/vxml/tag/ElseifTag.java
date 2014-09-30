@@ -14,11 +14,11 @@ public class ElseifTag extends AbstractTag {
 	@Override
 	public void startTag() {
 		Boolean isIfCondition = isIfConditionTrue();
-		if (isIfCondition != null && !isIfCondition) {
+		if (isIfCondition ==null || (isIfCondition != null && !isIfCondition)) {
 			String cond = getAttribute("cond");
 			Boolean elseIfCondition = (Boolean) VxmlBrowser.getContext().executeScript(cond);
 
-			if (elseIfCondition) {
+			if (elseIfCondition != null && elseIfCondition) {
 				setSkipExecute(false);
 				markElseIfCondition(true);
 			} else {

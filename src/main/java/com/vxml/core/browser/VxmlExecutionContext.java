@@ -56,6 +56,11 @@ public class VxmlExecutionContext {
     }
     
     public void assignScriptVar(String var, Object val) {
+        if(val == null) {
+
+//          VxmlBrowser.getContext().assignScriptVar(VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + ".subdialogName"
+        }
+        val = "true".equals(val) || "'true'".equals(val)? true : val;
         scriptExecutionContext.put(var, val);
     }
     

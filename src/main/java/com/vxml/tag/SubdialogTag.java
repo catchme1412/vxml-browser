@@ -12,6 +12,8 @@ import com.vxml.parser.VxmlDoc;
 
 public class SubdialogTag extends AbstractTag {
 
+    public static final String SUBDIALOG_NAME = ".subdialogName";
+    
     private String name;
 
     public SubdialogTag(Node node) {
@@ -21,7 +23,7 @@ public class SubdialogTag extends AbstractTag {
     @Override
     public void startTag() {
         name = getAttribute("name");
-        VxmlBrowser.getContext().assignScriptVar(VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + ".subdialogName", name);
+        VxmlBrowser.getContext().assignScriptVar(VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + SUBDIALOG_NAME, name);
         VxmlBrowser.getContext().executeScript("var " + name + "={}");
     }
 
@@ -65,6 +67,7 @@ public class SubdialogTag extends AbstractTag {
 
     @Override
     public void endTag() {
+        VxmlBrowser.getContext().assignScriptVar(VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + SUBDIALOG_NAME, null);
         System.err.println("SUBDIALOG ENDS" + name);
     }
 

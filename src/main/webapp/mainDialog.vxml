@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<vxml version="2.1">
+
+	<form id="F1">
+
+		<subdialog name="SubD_1" src="/vxml-browser/subdialog.vxml" cond="false">
+
+			<param name="confirm_prompt"
+				expr="'y'" />
+
+		</subdialog>
+
+		<subdialog name="SubD_2" src="/vxml-browser/subdialog.vxml" expr="crusty">
+
+			<param name="confirm_prompt"
+				expr="'t'" />
+
+		</subdialog>
+
+		<subdialog name="SubD_3" src="/vxml-browser/subdialog.vxml" cond="true" expr="">
+
+			<param name="confirm_prompt"
+				expr="'g'" />
+
+			<filled>
+
+				<prompt>
+
+					Poppa oo mow mow!
+
+				</prompt>
+
+			</filled>
+
+		</subdialog>
+
+	</form>
+
+</vxml>
+
+ 

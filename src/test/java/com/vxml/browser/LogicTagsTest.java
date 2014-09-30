@@ -91,7 +91,7 @@ public class LogicTagsTest {
         dtmfSource.useDelimiter(",");
         VxmlBrowser.getContext().setDtmfSource(dtmfSource);
         
-        VxmlBrowserWrapper.setBaseUrl("http://localhost:8080/vxml-browser");
+        VxmlBrowserWrapper.setBaseUrl("http://localhost:8082/vxml-browser");
         vxmlBrowser.setEntryPointUrl(VxmlBrowserWrapper.getFullUri("/nestedIf.vxml"));
 
         VxmlBrowserWrapper verifier = new VxmlBrowserWrapper(vxmlBrowser);
@@ -110,7 +110,7 @@ public class LogicTagsTest {
         dtmfSource.useDelimiter(",");
         VxmlBrowser.getContext().setDtmfSource(dtmfSource);
         
-        VxmlBrowserWrapper.setBaseUrl("http://localhost:8080/vxml-browser");
+        VxmlBrowserWrapper.setBaseUrl("http://localhost:8082/vxml-browser");
         vxmlBrowser.setEntryPointUrl(VxmlBrowserWrapper.getFullUri("/nestedIf.vxml"));
 
         VxmlBrowserWrapper verifier = new VxmlBrowserWrapper(vxmlBrowser);
@@ -129,7 +129,7 @@ public class LogicTagsTest {
         dtmfSource.useDelimiter(",");
         VxmlBrowser.getContext().setDtmfSource(dtmfSource);
         
-        VxmlBrowserWrapper.setBaseUrl("http://localhost:8080/vxml-browser");
+        VxmlBrowserWrapper.setBaseUrl("http://localhost:8082/vxml-browser");
         vxmlBrowser.setEntryPointUrl(VxmlBrowserWrapper.getFullUri("/nestedIf.vxml"));
 
         VxmlBrowserWrapper verifier = new VxmlBrowserWrapper(vxmlBrowser);
@@ -138,7 +138,7 @@ public class LogicTagsTest {
         AssertJUnit.assertEquals("TTS:Input first if", verifier.nextOuput());
         AssertJUnit.assertEquals("TTS:Input second if", verifier.nextOuput());
         AssertJUnit.assertEquals("TTS:Input nested Else If", verifier.nextOuput());
-        AssertJUnit.assertEquals("TTS:outer else if condition is true", verifier.nextOuput());
+        AssertJUnit.assertEquals("TTS:Outer else condition is true", verifier.nextOuput());
     }
     
     @Test
@@ -148,7 +148,7 @@ public class LogicTagsTest {
         dtmfSource.useDelimiter(",");
         VxmlBrowser.getContext().setDtmfSource(dtmfSource);
         
-        VxmlBrowserWrapper.setBaseUrl("http://localhost:8080/vxml-browser");
+        VxmlBrowserWrapper.setBaseUrl("http://localhost:8082/vxml-browser");
         vxmlBrowser.setEntryPointUrl(VxmlBrowserWrapper.getFullUri("/nestedIf.vxml"));
 
         VxmlBrowserWrapper verifier = new VxmlBrowserWrapper(vxmlBrowser);

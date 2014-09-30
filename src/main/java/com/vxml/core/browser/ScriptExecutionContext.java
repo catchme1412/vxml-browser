@@ -53,6 +53,7 @@ public class ScriptExecutionContext {
     }
 
     public void put(String key, Object val) {
+        val = "true".equals(val) || "'true'".equals(val)? true : val;
         scriptEngine.put(key, val);
     }
 
@@ -68,15 +69,14 @@ public class ScriptExecutionContext {
         // Create ScriptEngine
         ScriptEngine engine = engineManager.getEngineByName("ECMAScript");
         // Create file and reader instance for reading the script file
-
         // Pass the script file to the engine
-        URI uri = new URI("http://localhost:8585/common/js/convert_to_audio_url.js");
-        String string = new DocumentStore().getData(uri).toString();
-        engine.eval(string);
-        
-        System.out.println("Java Program Output");
-        // Create invocable instance
-        Invocable invocable = (Invocable) engine;
+//        URI uri = new URI("http://localhost:8585/common/js/convert_to_audio_url.js");
+//        String string = new DocumentStore().getData(uri).toString();
+//        engine.eval(string);
+//        
+//        System.out.println("Java Program Output");
+//        // Create invocable instance
+//        Invocable invocable = (Invocable) engine;
 
         // Invoke the methods defined in the script file
         // invocable.invokeFunction("parseXmlWithAttrToObject",

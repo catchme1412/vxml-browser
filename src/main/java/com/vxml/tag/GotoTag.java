@@ -30,6 +30,11 @@ public class GotoTag extends AbstractTag {
             System.err.println(e.getMessage());
         }
         target = (String) (target != null ? target : executeScript);
+        String newTarget  = (String) VxmlBrowser.getContext().executeScript(target);
+        System.out.println(this);
+        if (newTarget != null) {
+            target = newTarget;
+        }
     }
 
     @Override

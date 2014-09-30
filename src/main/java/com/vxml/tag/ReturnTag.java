@@ -17,7 +17,8 @@ public class ReturnTag extends AbstractTag {
     @Override
     public void startTag() {
         subdialogName = (String) VxmlBrowser.getContext().getScriptVar(
-                VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + ".subdialogName");
+                VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + SubdialogTag.SUBDIALOG_NAME);
+//        setSkipExecute(subdialogName == null);
     }
 
     @Override
@@ -25,9 +26,8 @@ public class ReturnTag extends AbstractTag {
         String namelist = getAttribute("namelist");
         for (String name : namelist.split(" ")) {
             String subDialogVariableName = subdialogName + "." + name;
-            VxmlBrowser.getContext().assignScriptVar(subDialogVariableName, null);
             VxmlBrowser.getContext().assignScriptVar(subDialogVariableName,
-                    VxmlBrowser.getContext().executeScript(name));
+                    VxmlBrowser.getContext().getScriptVar(name));
         }
         throw new ReturnFromSubdialogEvent();
     }

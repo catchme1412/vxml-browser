@@ -23,12 +23,12 @@ public class SubdialogTag extends AbstractTag {
     @Override
     public void startTag() {
         name = getAttribute("name");
-        VxmlBrowser.getContext().assignScriptVar(VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + SUBDIALOG_NAME, name);
-        VxmlBrowser.getContext().executeScript("var " + name + "={}");
     }
 
     @Override
     public void execute() {
+        VxmlBrowser.getContext().assignScriptVar(VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + SUBDIALOG_NAME, name);
+        VxmlBrowser.getContext().executeScript("var " + name + "={}");
         String srcexpr = getAttribute("srcexpr");
         String src = getAttribute("src");
 //        String target = getAttribute("name");
@@ -58,7 +58,9 @@ public class SubdialogTag extends AbstractTag {
                 String expr = node.getAttributes().getNamedItem("expr").getNodeValue();
                 url.append(name);
                 url.append("=");
-                url.append(VxmlBrowser.getContext().executeScript(expr));
+                Object val = VxmlBrowser.getContext().executeScript(expr);
+                VxmlBrowser.getContext().assignScriptVar(name, val);
+                url.append(val);
                 url.append("&");
             }
         }

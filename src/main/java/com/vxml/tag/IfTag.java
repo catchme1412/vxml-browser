@@ -47,6 +47,7 @@ public class IfTag extends AbstractTag {
 		// decrement only after setting calling markIfCondition method
 		ifConditionLevel--;
 		setSkipExecute(isSkipBackup);
+		System.err.println("RESETTTING: " + isSkipBackup + ":" + ifConditionLevel);
 	}
 
 }

@@ -39,8 +39,11 @@ public class VxmlScriptEngine {
         try {
             return scriptEngine.eval(scriptModified);
         }catch (Exception e) {
-            return scriptEngine.eval("simpleJsonParse(" +script +");");
+        	if(script.startsWith("{") && script.endsWith("}")) {
+        		return scriptEngine.eval("simpleJsonParse(" +script +");");
+        	} 
         }
+        return get(script);
     }
 
     public Object eval(InputStreamReader inputStreamReader) throws ScriptException {
@@ -54,6 +57,12 @@ public class VxmlScriptEngine {
     public Object get(String var) {
         return scriptEngine.get(var);
     }
+    
+    public static void main(String[] args) throws ScriptException {
+    	VxmlScriptEngine e = new VxmlScriptEngine();
+    	e.put("a","true");
+    	System.out.println(e.eval("a=='true'"));
+	}
 
 
 }

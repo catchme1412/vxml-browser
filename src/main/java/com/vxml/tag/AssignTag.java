@@ -5,48 +5,56 @@ import org.w3c.dom.Node;
 import sun.org.mozilla.javascript.internal.Undefined;
 
 import com.vxml.core.browser.VxmlBrowser;
+import com.vxml.core.browser.VxmlScriptEngine;
 
 public class AssignTag extends AbstractTag {
 
-    private String name;
+	private String name;
 
-    public AssignTag(Node node) {
-        super(node);
-    }
+	public AssignTag(Node node) {
+		super(node);
+	}
 
-    @Override
-    public void startTag() {
-        name = getAttribute("name");
-        VxmlBrowser.getContext().assignScriptVar(name, null);
-    }
+	@Override
+	public void startTag() {
+		name = getAttribute("name");
+		VxmlBrowser.getContext().assignScriptVar(name, null);
+	}
 
-    @Override
-    public void execute() {
-        name = getAttribute("name");
-        String expr = getAttribute("expr");
-//        expr = cleanup(expr);
-        if (expr != null) {
+	private String getSubdialogNameIfAny() {
+		return (String) VxmlBrowser.getContext().getScriptVar(
+				VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + SubdialogTag.SUBDIALOG_NAME);
+	}
 
-            // TODO clean up the logic
-            Object exprResult = expr;
-            Object val = VxmlBrowser.getContext().getScriptVar(expr);
-            if (!(val instanceof Undefined || val == null)) {
-                exprResult = val;
-            } else if (val == null) {
-                val = VxmlBrowser.getContext().executeScript(expr);
-                if (val != null) {
-                    exprResult = val;
-                }
-            }
+	@Override
+	public void execute() {
+		name = getAttribute("name");
+		String expr = getAttribute("expr");
+		String varName = name;
+		
+		// // expr = cleanup(expr);
+		// if (expr != null) {
+		//
+		// // TODO clean up the logic
+		// Object exprResult = expr;
+		 
+		// if (!(val instanceof Undefined || val == null)) {
+		// exprResult = val;
+		// } else if (val == null) {
+		 Object val = VxmlBrowser.getContext().executeScript(expr);
+		// if (val != null) {
+		// exprResult = val;
+		// }
+		// }
+		//
+		VxmlBrowser.getContext().assignScriptVar(name, val);
+		// }
+	}
 
-            VxmlBrowser.getContext().assignScriptVar(name, exprResult);
-        }
-    }
-
-    private String cleanup(String expr) {
-        if (expr.startsWith("'") && expr.endsWith("'")) {
-            return expr.substring(1, expr.length() - 1);
-        }
-        return expr;
-    }
+	private String cleanup(String expr) {
+		if (expr.startsWith("'") && expr.endsWith("'")) {
+			return expr.substring(1, expr.length() - 1);
+		}
+		return expr;
+	}
 }

@@ -31,6 +31,7 @@ public class SubdialogTag extends AbstractTag {
         VxmlBrowser.getContext().executeScript("var " + name + "={}");
         String srcexpr = getAttribute("srcexpr");
         String src = getAttribute("src");
+        String cond = getAttribute("cond");
 //        String target = getAttribute("name");
         src = src != null ? src : (String) VxmlBrowser.getContext().getScriptVar(srcexpr);
 
@@ -39,7 +40,7 @@ public class SubdialogTag extends AbstractTag {
             new VxmlDoc(url.toString()).play();
         } catch (Event e) {
             if (e instanceof ReturnFromSubdialogEvent) {
-                System.out.println("Returning from subdialog.........");
+                System.err.println("Returning from subdialog.........");
             }
         }
 

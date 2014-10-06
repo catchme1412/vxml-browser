@@ -60,7 +60,7 @@ public class VxmlExecutionContext {
 
 //          VxmlBrowser.getContext().assignScriptVar(VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + ".subdialogName"
         }
-        val = "true".equals(val) || "'true'".equals(val)? true : val;
+//        val = "true".equals(val) || "'true'".equals(val)? true : val;
         scriptExecutionContext.put(var, val);
     }
     

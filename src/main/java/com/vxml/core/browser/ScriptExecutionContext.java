@@ -53,7 +53,7 @@ public class ScriptExecutionContext {
     }
 
     public void put(String key, Object val) {
-        val = "true".equals(val) || "'true'".equals(val)? true : val;
+//        val = "true".equals(val) || "'true'".equals(val)? true : val;
         scriptEngine.put(key, val);
     }
 

@@ -46,7 +46,7 @@ public class VxmlExecutionContext {
     }
     
     public void executeMethod(String methodName, List<Bindings> bindings) {
-        return scriptExecutionContext.invokeMethod(methodName, bindings);
+//        return scriptExecutionContext.invokeMethod(methodName, bindings);
     }
 
     public Object executeScriptNullIfUndefined(String script) {

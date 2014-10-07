@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vxml version="2.1">
+<script>
+function foo(number) {
+	return number + 20;
+}
+</script>
+	<form id="F1">
+		<var name="num" expr="10" />
+		<assign name="r" expr="foo(num)" />
+		<block>
+			<prompt>Our favorite movie star is <value expr="r" /></prompt>
+		</block>
+	</form>
+</vxml>

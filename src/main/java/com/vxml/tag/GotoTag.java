@@ -1,6 +1,7 @@
 package com.vxml.tag;
 
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import com.vxml.browser.event.Event;
 import com.vxml.core.browser.VxmlBrowser;
@@ -41,6 +42,16 @@ public class GotoTag extends AbstractTag {
     public void execute() throws Event {
         if (target.startsWith("#")) {
             Tag form = VxmlBrowser.getContext().getTag(target.substring(1));
+            if (form == null) {
+                NodeList forms = getNode().getOwnerDocument().getElementsByTagName("form");
+                for (int i = 0; i < forms.getLength(); i++) {
+                    String formName = forms.item(i).getAttributes().getNamedItem("id").getNodeValue();
+                    if (formName.equals(target.substring(1))) {
+                        Node formNode = forms.item(i);
+                        form = TagFactory.get(formNode);
+                    }
+                }
+            } 
             ((AbstractTag) form).tryExecute();
         } else {
             new VxmlDoc(target).play();

@@ -14,7 +14,7 @@ public class SubdialogTag extends AbstractTag {
 
     public static final String SUBDIALOG_NAME = ".subdialogName";
     
-    private String name;
+    private String subdialogName;
 
     public SubdialogTag(Node node) {
         super(node);
@@ -22,13 +22,13 @@ public class SubdialogTag extends AbstractTag {
 
     @Override
     public void startTag() {
-        name = getAttribute("name");
+        subdialogName = getAttribute("name");
     }
 
     @Override
     public void execute() {
-        VxmlBrowser.getContext().assignScriptVar(VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + SUBDIALOG_NAME, name);
-        VxmlBrowser.getContext().executeScript("var " + name + "={}");
+        VxmlBrowser.getContext().assignScriptVar(VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + SUBDIALOG_NAME, subdialogName);
+//        VxmlBrowser.getContext().executeScript("var " + name + "={}");
         String srcexpr = getAttribute("srcexpr");
         String src = getAttribute("src");
         String cond = getAttribute("cond");
@@ -60,7 +60,7 @@ public class SubdialogTag extends AbstractTag {
                 url.append(name);
                 url.append("=");
                 Object val = VxmlBrowser.getContext().executeScript(expr);
-                VxmlBrowser.getContext().assignScriptVar(name, val);
+                VxmlBrowser.getContext().assignScriptVar(subdialogName + "." + name, val);
                 url.append(val);
                 url.append("&");
             }
@@ -71,7 +71,7 @@ public class SubdialogTag extends AbstractTag {
     @Override
     public void endTag() {
         VxmlBrowser.getContext().assignScriptVar(VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + SUBDIALOG_NAME, null);
-        System.err.println("SUBDIALOG ENDS" + name);
+        System.err.println("SUBDIALOG ENDS" + subdialogName);
     }
 
     public static void main(String[] args) {

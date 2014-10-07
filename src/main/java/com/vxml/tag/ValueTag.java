@@ -11,6 +11,8 @@ import org.w3c.dom.Node;
 import sun.org.mozilla.javascript.internal.Undefined;
 
 import com.vxml.core.browser.VxmlBrowser;
+import com.vxml.core.browser.VxmlExecutionContext;
+import com.vxml.core.browser.VxmlScriptEngine;
 
 public class ValueTag extends AbstractTag {
 
@@ -22,6 +24,10 @@ public class ValueTag extends AbstractTag {
     public void execute() {
         if (getNode().getParentNode().getNodeName().equals("prompt")) {
             String expr = getAttribute("expr");
+            String subDialog = (String)VxmlBrowser.getContext().getScriptVar(VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + SubdialogTag.SUBDIALOG_NAME);
+            if (subDialog != null) {
+                expr = subDialog + "." + expr;
+            }
             Object value = VxmlBrowser.getContext().executeScript(expr);
             if (value == null || value instanceof Undefined) {
                 value = VxmlBrowser.getContext().getScriptVar(expr);

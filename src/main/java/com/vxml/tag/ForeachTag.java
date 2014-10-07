@@ -56,7 +56,11 @@ public class ForeachTag extends AbstractTag {
                 System.out.println("LOOOP:" + o);
                 executeChildTree(getNode());
 		    }
-		    
+
+		}
+		if (array instanceof String) {
+		    Object val = VxmlBrowser.getContext().executeScript(array.toString());
+		    System.out.println(val);
 		}
 		setSkipExecute(true);
 	}

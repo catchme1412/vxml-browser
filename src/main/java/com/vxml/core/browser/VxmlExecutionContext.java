@@ -5,10 +5,12 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 
+import javax.script.Bindings;
 import javax.script.ScriptException;
 
 import com.vxml.audio.NativeCommand;
@@ -23,17 +25,17 @@ public class VxmlExecutionContext {
     private static String docBaseUrl;
     private EventHandler eventHandler;
     private NativeCommand nativeCommand;
-    
+
     private boolean isSuspended;
-    
-    //mainly for form when referred from goto
+
+    // mainly for form when referred from goto
     private Map<String, FormTag> formMap;
-	private Scanner dtmfSource; 
+    private Scanner dtmfSource;
 
     public VxmlExecutionContext() throws ScriptException {
         scriptExecutionContext = new ScriptExecutionContext();
         eventHandler = new EventHandler();
-        //default
+        // default
         dtmfSource = new Scanner(System.in);
         formMap = new HashMap<String, FormTag>();
         nativeCommand = new NativeCommand();
@@ -43,27 +45,33 @@ public class VxmlExecutionContext {
         return executeScriptNullIfUndefined(script);
     }
     
-    public Object executeScriptNullIfUndefined(String script) {
-            return scriptExecutionContext.executeScriptNullIfUndefined(script);
+    public void executeMethod(String methodName, List<Bindings> bindings) {
+        return scriptExecutionContext.invokeMethod(methodName, bindings);
     }
-    
+
+    public Object executeScriptNullIfUndefined(String script) {
+        return scriptExecutionContext.executeScriptNullIfUndefined(script);
+    }
+
     public Object executeScript(InputStream script) {
         try {
             return scriptExecutionContext.executeScript(script);
         } catch (ScriptException e) {
-            throw new VxmlException("Script failure:" + script , e);
+            throw new VxmlException("Script failure:" + script, e);
         }
     }
-    
-    public void assignScriptVar(String var, Object val) {
-        if(val == null) {
 
-//          VxmlBrowser.getContext().assignScriptVar(VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + ".subdialogName"
+    public void assignScriptVar(String var, Object val) {
+        String varName = var;
+        Object newVal = val;
+
+        if (val != null) {
+            newVal = executeScript(val.toString());
+            newVal = newVal != null ? newVal : val;
         }
-//        val = "true".equals(val) || "'true'".equals(val)? true : val;
-        scriptExecutionContext.put(var, val);
+        scriptExecutionContext.put(varName, newVal);
     }
-    
+
     public Object getScriptVar(String var) {
         return scriptExecutionContext.get(var);
     }
@@ -101,18 +109,18 @@ public class VxmlExecutionContext {
     public void storeTag(String id, FormTag tag) {
         formMap.put(id, tag);
     }
-    
+
     public FormTag getTag(String formId) {
         return formMap.get(formId);
     }
 
-	public Scanner getDtmfSource() {
-		return dtmfSource;
-	}
+    public Scanner getDtmfSource() {
+        return dtmfSource;
+    }
 
-	public void setDtmfSource(Scanner dtmfSource) {
-		this.dtmfSource = dtmfSource;
-	}
+    public void setDtmfSource(Scanner dtmfSource) {
+        this.dtmfSource = dtmfSource;
+    }
 
     public boolean isSuspended() {
         return isSuspended;
@@ -124,7 +132,7 @@ public class VxmlExecutionContext {
 
     public void resume() {
         isSuspended = false;
-        
+
     }
 
     public boolean isSlientMode() {

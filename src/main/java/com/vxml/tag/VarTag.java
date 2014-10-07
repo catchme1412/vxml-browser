@@ -21,28 +21,26 @@ public class VarTag extends AbstractTag {
     @Override
     public void execute() {
         // System.out.println(getAttribute("name"));
+        String subdialogName = (String) VxmlBrowser.getContext().getScriptVar(
+                VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + SubdialogTag.SUBDIALOG_NAME);
         String name = getAttribute("name");
         String expr = getAttribute("expr");
+        String varName = name;
         Object value = expr;
-        if (expr != null) {
+        if (expr != null && !expr.equals("'true'")) {
             value = VxmlBrowser.getContext().executeScript(expr);
-            value = value !=null ? value : expr;
-            VxmlBrowser.getContext().assignScriptVar(name, value);
+            value = value != null ? value : expr;
+        } else if (subdialogName != null){
+            // could be subdialog
+
+            value = VxmlBrowser.getContext().getScriptVar(subdialogName + "." + name);
+            if (value != null) {
+                varName = subdialogName + "." + name;
+            }
         }
-//        if (expr != null) {
-//            Object value = VxmlBrowser.getContext().executeScript(expr);
-//
-//            if (value != null && !(value instanceof Undefined)) {
-//                VxmlBrowser.getContext().assignScriptVar(name, value);
-//            } else {
-//                Object v = VxmlBrowser.getContext().getScriptVar(expr);
-//                if (v != null && !(v instanceof Undefined)) {
-//                    VxmlBrowser.getContext().assignScriptVar(name, v);
-//                }
-//            }
-//        } else {
-//            VxmlBrowser.getContext().assignScriptVar(name, null);
-//        }
+
+        VxmlBrowser.getContext().assignScriptVar(varName, value);
+
     }
 
     public static void main(String[] args) {

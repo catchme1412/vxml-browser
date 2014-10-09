@@ -2,7 +2,6 @@ package com.vxml.core.browser;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Scanner;
 
 import javax.script.ScriptException;
 

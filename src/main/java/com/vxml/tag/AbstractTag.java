@@ -49,9 +49,11 @@ public abstract class AbstractTag implements Tag {
             // System.out.println("START:" + node.getNodeType() + "::" + tag);
             // stack.add(tag);
             tag.startTag();
+            boolean skipBkp = isSkipExecute;
             ((AbstractTag) tag).tryExecute();
             executeChildTree(child);
             tag.endTag();
+            isSkipExecute = skipBkp;
         }
 
         // System.out.println("END:" + tag);

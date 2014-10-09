@@ -7,7 +7,6 @@ public class ClearTag extends DoNothingTag {
 
     public ClearTag(Node node) {
         super(node);
-        // TODO Auto-generated constructor stub
     }
 
 

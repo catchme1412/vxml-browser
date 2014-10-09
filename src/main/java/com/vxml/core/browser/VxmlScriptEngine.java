@@ -39,11 +39,10 @@ public class VxmlScriptEngine {
 		}
 		try {
 			Object eval = scriptEngine.eval(scriptModified);
-			// //TODO dirty logic
-			// if (eval.equals("'" + script + "'")) {
-			// eval = script;
-			// }
-			// return eval;
+			if (eval != null) {
+			    return eval;
+			}
+			
 		} catch (Exception e) {
 			if (script.startsWith("{") && script.endsWith("}")) {
 				return scriptEngine.eval("simpleJsonParse(" + script + ");");

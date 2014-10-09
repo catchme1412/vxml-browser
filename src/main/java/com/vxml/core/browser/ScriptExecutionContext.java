@@ -1,28 +1,26 @@
 package com.vxml.core.browser;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 import java.util.logging.Logger;
 
-import javax.script.Bindings;
-import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+
+import org.apache.http.client.ClientProtocolException;
+
+import sun.org.mozilla.javascript.internal.NativeArray;
 
 import com.vxml.store.DocumentStore;
 
 public class ScriptExecutionContext {
 
     private static final Logger log = Logger.getAnonymousLogger();
-    private ScriptEngineManager manager;
 
     private VxmlScriptEngine scriptEngine;
 
@@ -55,7 +53,7 @@ public class ScriptExecutionContext {
     }
 
     public void put(String key, Object val) {
-//        val = "true".equals(val) || "'true'".equals(val)? true : val;
+        // val = "true".equals(val) || "'true'".equals(val)? true : val;
         scriptEngine.put(key, val);
     }
 
@@ -63,7 +61,8 @@ public class ScriptExecutionContext {
         return scriptEngine.get(var);
     }
 
-    public static void main(String[] args) throws ScriptException, FileNotFoundException, NoSuchMethodException, URISyntaxException {
+    public static void main(String[] args) throws ScriptException, NoSuchMethodException,
+            URISyntaxException, ClientProtocolException, IOException {
 
         // Create ScriptEngineManager
         ScriptEngineManager engineManager = new ScriptEngineManager();
@@ -72,20 +71,32 @@ public class ScriptExecutionContext {
         ScriptEngine engine = engineManager.getEngineByName("ECMAScript");
         // Create file and reader instance for reading the script file
         // Pass the script file to the engine
-//        URI uri = new URI("http://localhost:8585/common/js/convert_to_audio_url.js");
-//        String string = new DocumentStore().getData(uri).toString();
-//        engine.eval(string);
-//        
-//        System.out.println("Java Program Output");
-//        // Create invocable instance
-//        Invocable invocable = (Invocable) engine;
+        URI uri = new URI("http://localhost:8585/ivr/service/wl2/js/audio_functions.js");
+        InputStream string = new DocumentStore().getInputStream(uri);
+        engine.eval(new InputStreamReader(string));
+        engine.put("phoneNumber", "234");
+        Object t = engine.eval("phNumDigitsAudio(phoneNumber,'http://audio.en-US.tellme.com/en-us/sys/')");
+        System.out.println(t);
+        if (t instanceof NativeArray) {
+            NativeArray arr = (NativeArray) t;
+            Object [] a = new Object[(int) arr.getLength()];
+            for (Object o : arr.getIds()) {
+                int index = (Integer) o;
+                a[index] = arr.get(index, null);
+                Object val = a[index];
+                System.out.println("LOOOP:" + o);
+                System.out.println("LOOOP:" + val);
+            }
+
+        }
+        // System.out.println("Java Program Output");
+        // // Create invocable instance
+        // Invocable invocable = (Invocable) engine;
 
         // Invoke the methods defined in the script file
         // invocable.invokeFunction("parseXmlWithAttrToObject",
         // "/opt/orbitz/code/web-ivr/src/main/webapp/ivr/common/js/parseXmlWithAttrToObject.js");
 
     }
-
-    
 
 }

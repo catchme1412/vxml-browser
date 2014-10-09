@@ -42,6 +42,7 @@ public class AssignTag extends AbstractTag {
 		// exprResult = val;
 		// } else if (val == null) {
 		 Object val = VxmlBrowser.getContext().executeScript(expr);
+		 val = VxmlBrowser.getContext().getScriptVar(expr);
 		// if (val != null) {
 		// exprResult = val;
 		// }

@@ -1,6 +1,7 @@
 package com.vxml.parser;
 
 import java.net.URI;
+import java.util.Scanner;
 
 import org.w3c.dom.Document;
 
@@ -23,10 +24,26 @@ public class VxmlDoc {
 //    }
 
     public VxmlDoc(String string) {
+        
     	AbstractTag.setSkipExecute(false);
         this.setDocumentUrl(string);
         URI uri;
         uri = VxmlBrowser.getContext().getFullUri(string);
+        String query = uri.getQuery();
+        if (query != null) {
+            
+            Scanner sc = new Scanner(query);
+            sc.useDelimiter("&");
+            while(sc.hasNext()) {
+                String t = sc.next();
+                if (t.contains("ani")) {
+                    VxmlBrowser.getContext().assignScriptVar("application.ANI", t.split("=")[1]);
+                }
+                if (t.contains("dnis")) {
+                    VxmlBrowser.getContext().assignScriptVar("application.DNIS", t.split("=")[1]);
+                }
+            }
+        }
         documentStore = new DocumentStore();
         xmlDoc = documentStore.getDoc(uri);
 //        stack = new Stack<Tag>();

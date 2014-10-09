@@ -26,6 +26,7 @@ public class ReturnTag extends AbstractTag {
         String namelist = getAttribute("namelist");
         for (String name : namelist.split(" ")) {
             String subDialogVariableName = subdialogName + "." + name;
+//            System.err.println("SETTING: " + subdialogName + ":" + name);
             VxmlBrowser.getContext().assignScriptVar(subDialogVariableName,
                     VxmlBrowser.getContext().getScriptVar(name));
         }

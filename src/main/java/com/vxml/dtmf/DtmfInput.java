@@ -61,8 +61,6 @@ public class DtmfInput {
 		        if (stdin.hasNext()) {
 		            if (stdin.hasNextBoolean()) {
 		                input = stdin.nextBoolean();
-		            } else if (stdin.hasNextInt()) {
-		                input = stdin.nextInt();
 		            } else {
 		                input = stdin.next();
 		            }

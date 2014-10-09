@@ -62,14 +62,7 @@ public class VxmlExecutionContext {
     }
 
     public void assignScriptVar(String var, Object val) {
-        String varName = var;
-        Object newVal = val;
-
-        if (val != null) {
-            newVal = executeScript(val.toString());
-            newVal = newVal != null ? newVal : val;
-        }
-        scriptExecutionContext.put(varName, newVal);
+        scriptExecutionContext.put(var, val);
     }
 
     public Object getScriptVar(String var) {

@@ -1,5 +1,8 @@
 package com.vxml.tag;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.w3c.dom.Node;
 
 import com.vxml.browser.event.Event;
@@ -13,6 +16,8 @@ public abstract class AbstractTag implements Tag {
     private static boolean isSkipExecute;
     
     protected static int ifConditionLevel;
+    
+    private static Map<String, String> dtmfInputTranslationMap = new HashMap<String, String>();
 
     public AbstractTag(Node node) {
         this.node = node;
@@ -81,7 +86,9 @@ public abstract class AbstractTag implements Tag {
         if (isSkipExecute()) {
             // System.out.println("SKIPPING:" + this);
         } else {
-            System.out.println("EXECUTING:" + this + "\t<=\t" + getNode().getOwnerDocument().getDocumentURI());
+            if (!getNode().getOwnerDocument().getDocumentURI().contains("app_root.vxml")) {
+                System.out.println("EXECUTING:" + this + "\t<=\t" + getNode().getOwnerDocument().getDocumentURI());
+            }
             execute();
             VxmlBrowser.getContext().getEventHandler().invokeListeners(this);
         }
@@ -98,4 +105,15 @@ public abstract class AbstractTag implements Tag {
         AbstractTag.isSkipExecute = isSkip;
     }
 
+    public void addDtmfTranslation(String key, String translation) {
+        dtmfInputTranslationMap.put(key, translation);
+    }
+    
+    public static void clearDtmfTranslations() {
+        dtmfInputTranslationMap.clear();
+    }
+
+    public static String getTranslation(String input) {
+        return dtmfInputTranslationMap.get(input);
+    }
 }

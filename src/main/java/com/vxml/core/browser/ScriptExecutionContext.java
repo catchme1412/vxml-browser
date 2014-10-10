@@ -68,26 +68,30 @@ public class ScriptExecutionContext {
 
         // Create ScriptEngine
         ScriptEngine engine = engineManager.getEngineByName("ECMAScript");
+        engine.put("k", "'sales'");
+        Object r = engine.eval("k");
+        Object r2 = engine.eval("'sales'");
+        System.out.println(r);
         // Create file and reader instance for reading the script file
         // Pass the script file to the engine
-        URI uri = new URI("http://localhost:8585/ivr/service/wl2/js/audio_functions.js");
-        InputStream string = new DocumentStore().getInputStream(uri);
-        engine.eval(new InputStreamReader(string));
-        engine.put("phoneNumber", "234");
-        Object t = engine.eval("phNumDigitsAudio(phoneNumber,'http://audio.en-US.tellme.com/en-us/sys/')");
-        System.out.println(t);
-        if (t instanceof NativeArray) {
-            NativeArray arr = (NativeArray) t;
-            Object [] a = new Object[(int) arr.getLength()];
-            for (Object o : arr.getIds()) {
-                int index = (Integer) o;
-                a[index] = arr.get(index, null);
-                Object val = a[index];
-                System.out.println("LOOOP:" + o);
-                System.out.println("LOOOP:" + val);
-            }
-
-        }
+//        URI uri = new URI("http://localhost:8585/ivr/service/wl2/js/audio_functions.js");
+//        InputStream string = new DocumentStore().getInputStream(uri);
+//        engine.eval(new InputStreamReader(string));
+//        engine.put("phoneNumber", "234");
+//        Object t = engine.eval("phNumDigitsAudio(phoneNumber,'http://audio.en-US.tellme.com/en-us/sys/')");
+//        System.out.println(t);
+//        if (t instanceof NativeArray) {
+//            NativeArray arr = (NativeArray) t;
+//            Object [] a = new Object[(int) arr.getLength()];
+//            for (Object o : arr.getIds()) {
+//                int index = (Integer) o;
+//                a[index] = arr.get(index, null);
+//                Object val = a[index];
+//                System.out.println("LOOOP:" + o);
+//                System.out.println("LOOOP:" + val);
+//            }
+//
+//        }
         // System.out.println("Java Program Output");
         // // Create invocable instance
         // Invocable invocable = (Invocable) engine;

@@ -3,6 +3,7 @@ package com.vxml.dtmf;
 import java.util.Scanner;
 
 import com.vxml.core.browser.VxmlBrowser;
+import com.vxml.tag.AbstractTag;
 
 public class DtmfInput {
 
@@ -20,7 +21,9 @@ public class DtmfInput {
 		if (stdin.hasNext()) {
 			value = stdin.next();
 		}
-		return value;
+		String newVal = AbstractTag.getTranslation(value);
+		newVal = newVal != null ? newVal : value;
+		return newVal;
 	}
 
 	public Object readWithTimeOut(int timeout) {

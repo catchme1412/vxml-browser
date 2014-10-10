@@ -26,6 +26,7 @@ public class VxmlDoc {
     public VxmlDoc(String string) {
         
     	AbstractTag.setSkipExecute(false);
+    	AbstractTag.clearDtmfTranslations();
         this.setDocumentUrl(string);
         URI uri;
         uri = VxmlBrowser.getContext().getFullUri(string);

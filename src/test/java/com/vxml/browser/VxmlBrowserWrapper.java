@@ -8,7 +8,6 @@ import java.util.concurrent.LinkedBlockingDeque;
 import com.vxml.browser.event.Event;
 import com.vxml.core.VxmlException;
 import com.vxml.core.browser.VxmlBrowser;
-import com.vxml.core.browser.VxmlExecutionContext;
 import com.vxml.parser.event.OutputListener;
 import com.vxml.tag.AbstractTag;
 import com.vxml.tag.Tag;
@@ -23,7 +22,7 @@ public class VxmlBrowserWrapper {
 
 	private LinkedBlockingDeque<String> keyInputList;
 
-	private static String baseUrl = "http://localhost:8080/vxml-browser";
+	private static String baseUrl = "http://localhost:8082/vxml-browser";
 	
 	
 	public VxmlBrowserWrapper(VxmlBrowser vxmlBrowser) throws IOException {
@@ -70,7 +69,7 @@ public class VxmlBrowserWrapper {
 
 	public static String getFullUri(String uri) {
 	    if (!uri.startsWith("http")) {
-	        return getBaseUrl() + uri;
+	        return baseUrl + uri;
 	    }
 	    return uri;
 	}

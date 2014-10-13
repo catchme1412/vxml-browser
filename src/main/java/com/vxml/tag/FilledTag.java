@@ -58,6 +58,9 @@ public class FilledTag extends AbstractTag {
 				        value = t;
 				    }
 				}
+				if (Boolean.parseBoolean(value.toString())) {
+					value = true;
+				}
 				VxmlBrowser.getContext().assignScriptVar(fieldName, value);
 
 			} else {

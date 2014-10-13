@@ -91,7 +91,7 @@ public class LogicTagsTest {
         dtmfSource.useDelimiter(",");
         VxmlBrowser.getContext().setDtmfSource(dtmfSource);
         
-        VxmlBrowserWrapper.setBaseUrl("http://localhost:8082/vxml-browser");
+        VxmlBrowserWrapper.setBaseUrl("http://localhost:8080/vxml-browser");
         vxmlBrowser.setEntryPointUrl(VxmlBrowserWrapper.getFullUri("/nestedIf.vxml"));
 
         VxmlBrowserWrapper verifier = new VxmlBrowserWrapper(vxmlBrowser);
@@ -110,7 +110,7 @@ public class LogicTagsTest {
         dtmfSource.useDelimiter(",");
         VxmlBrowser.getContext().setDtmfSource(dtmfSource);
         
-        VxmlBrowserWrapper.setBaseUrl("http://localhost:8082/vxml-browser");
+        VxmlBrowserWrapper.setBaseUrl("http://localhost:8080/vxml-browser");
         vxmlBrowser.setEntryPointUrl(VxmlBrowserWrapper.getFullUri("/nestedIf.vxml"));
 
         VxmlBrowserWrapper verifier = new VxmlBrowserWrapper(vxmlBrowser);
@@ -129,7 +129,7 @@ public class LogicTagsTest {
         dtmfSource.useDelimiter(",");
         VxmlBrowser.getContext().setDtmfSource(dtmfSource);
         
-        VxmlBrowserWrapper.setBaseUrl("http://localhost:8082/vxml-browser");
+        VxmlBrowserWrapper.setBaseUrl("http://localhost:8080/vxml-browser");
         vxmlBrowser.setEntryPointUrl(VxmlBrowserWrapper.getFullUri("/nestedIf.vxml"));
 
         VxmlBrowserWrapper verifier = new VxmlBrowserWrapper(vxmlBrowser);
@@ -148,7 +148,7 @@ public class LogicTagsTest {
         dtmfSource.useDelimiter(",");
         VxmlBrowser.getContext().setDtmfSource(dtmfSource);
         
-        VxmlBrowserWrapper.setBaseUrl("http://localhost:8082/vxml-browser");
+        VxmlBrowserWrapper.setBaseUrl("http://localhost:8080/vxml-browser");
         vxmlBrowser.setEntryPointUrl(VxmlBrowserWrapper.getFullUri("/nestedIf.vxml"));
 
         VxmlBrowserWrapper verifier = new VxmlBrowserWrapper(vxmlBrowser);

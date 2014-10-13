@@ -4,12 +4,15 @@ import org.w3c.dom.Node;
 
 public class CatchTag extends AbstractTag {
 
+    private boolean isSkipTag;
+    
 	public CatchTag(Node node) {
 		super(node);
 	}
 
 	@Override
 	public void startTag() {
+	    isSkipTag = isSkipExecute();
 		setSkipExecute(true);
 	}
 
@@ -19,7 +22,7 @@ public class CatchTag extends AbstractTag {
 
 	@Override
 	public void endTag() {
-		setSkipExecute(false);
+		setSkipExecute(isSkipTag);
 	}
 
 }

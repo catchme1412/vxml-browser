@@ -57,5 +57,26 @@ public class OrbitzTest {
         AssertJUnit.assertEquals(verifier.nextOuput(), "Audio:http://sdfasdf");
         
     }
+    
+    @Test
+    public void testSales() throws VxmlException, URISyntaxException, Event, IOException {
+ final String DTMF_INPUT = "1,2";
+        
+        vxmlBrowser.setEntryPointUrl("http://localhost:8585/ivr/testing/sao.vxml");
+
+        VxmlBrowserWrapper verifier = new VxmlBrowserWrapper(vxmlBrowser);
+        verifier.setDtmfInputSequence(DTMF_INPUT, ",");
+        vxmlBrowser.getContext().setSlientMode(true);
+        verifier.start();
+        
+        AssertJUnit.assertEquals(verifier.nextOuput(), "TTS:Input 1 or 2 or something else?");
+        AssertJUnit.assertEquals(verifier.nextOuput(), "TTS:Input is one");
+        AssertJUnit.assertEquals(verifier.nextOuput(), "TTS:Input is one");
+        AssertJUnit.assertEquals(verifier.nextOuput(), "TTS:Input is one");
+        AssertJUnit.assertEquals(verifier.nextOuput(), "TTS:Input is one");
+        AssertJUnit.assertEquals(verifier.nextOuput(), "TTS:Input is one");
+        AssertJUnit.assertEquals(verifier.nextOuput(), "TTS:Input is one");
+        AssertJUnit.assertEquals(verifier.nextOuput(), "Audio:http://sdfasdf");
+    }
 
 }

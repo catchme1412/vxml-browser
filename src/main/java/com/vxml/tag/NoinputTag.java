@@ -6,12 +6,15 @@ import com.vxml.core.browser.VxmlBrowser;
 
 public class NoinputTag extends AbstractTag {
 
+  private boolean isSkipTag;
+
     public NoinputTag(Node node) {
         super(node);
     }
 
     @Override
     public void startTag() {
+        isSkipTag = isSkipExecute();
         if ("noinput".equals(VxmlBrowser.getContext().getEventHandler().getLastEvent())) {
             setSkipExecute(false);
             VxmlBrowser.getContext().getEventHandler().clearEvent();
@@ -27,7 +30,37 @@ public class NoinputTag extends AbstractTag {
 
     @Override
     public void endTag() {
-        setSkipExecute(false);
+        setSkipExecute(isSkipTag);
     }
 
 }
+
+
+//package com.vxml.tag;
+//
+//import org.w3c.dom.Node;
+//
+//public class HelpTag extends AbstractTag {
+//
+//    private boolean isSkipTag;
+//    
+//    public HelpTag(Node node) {
+//        super(node);
+//    }
+//
+//    @Override
+//    public void startTag() {
+//        isSkipTag = isSkipExecute();
+//        setSkipExecute(true);
+//    }
+//
+//    @Override
+//    public void execute() {
+//    }
+//
+//    @Override
+//    public void endTag() {
+//        setSkipExecute(isSkipTag);
+//    }
+//
+//}

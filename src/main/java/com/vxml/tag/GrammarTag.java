@@ -8,6 +8,8 @@ import com.vxml.parser.VxmlDoc;
 
 public class GrammarTag extends AbstractTag {
 
+    private boolean isSkipTag;
+    
     private boolean isSlientModeBackup;
     private String mode;
     
@@ -17,6 +19,7 @@ public class GrammarTag extends AbstractTag {
 
 	@Override
 	public void startTag() {
+	    isSkipTag = isSkipExecute();
 	    mode = getAttribute("mode");
 	    isSlientModeBackup = VxmlBrowser.getContext().isSlientMode();
 		VxmlBrowser.getContext().setSlientMode(true);
@@ -27,16 +30,19 @@ public class GrammarTag extends AbstractTag {
 	@Override
 	public void execute() throws Event {
 	    String srcexpr = getAttribute("srcexpr");
-	    String val = (String) VxmlBrowser.getContext().executeScript(srcexpr);
-	    val = val != null ? val : srcexpr;
-	    if(val != null) {
-	        new VxmlDoc(val).play();
+	    if (srcexpr != null) {
+	        String val = (String) VxmlBrowser.getContext().executeScript(srcexpr);
+	        val = val != null ? val : srcexpr;
+	        if(val != null) {
+	            new VxmlDoc(val).play();
+	        }
 	    }
 	}
 	
 	@Override
 	public void endTag() {
 		VxmlBrowser.getContext().setSlientMode(isSlientModeBackup);
+		 setSkipExecute(isSkipTag);
 	}
 	
 }

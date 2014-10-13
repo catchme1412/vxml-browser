@@ -21,6 +21,9 @@ public class IfTag extends AbstractTag {
 		isSkipBackup = isSkipExecute();
 		ifConditionLevel++;
 		cond = getAttribute("cond");
+		System.out.println(cond);
+		Object t = VxmlBrowser.getContext().executeScript("path_type;");
+        System.out.println(t);
 	}
 
 	@Override

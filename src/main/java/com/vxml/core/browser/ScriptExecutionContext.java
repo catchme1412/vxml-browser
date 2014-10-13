@@ -15,6 +15,7 @@ import org.apache.http.client.ClientProtocolException;
 
 import sun.org.mozilla.javascript.internal.NativeArray;
 
+import com.vxml.core.VxmlException;
 import com.vxml.store.DocumentStore;
 
 public class ScriptExecutionContext {
@@ -41,9 +42,9 @@ public class ScriptExecutionContext {
         } catch (Exception e) {
             System.err.println(script);
             System.err.println("SCRIPT FAILURE: " + e.getMessage());
-
+            throw new VxmlException(e);
         }
-        return null;
+//        return null;
     }
 
     public Object executeScript(String script) throws ScriptException {

@@ -21,6 +21,8 @@ public class ElseTag extends AbstractTag {
 				setSkipExecute(false);
 			} else if (!isSkipExecute()){
 				setSkipExecute(true);
+			} else {
+			    setSkipExecute(false);
 			}
 		} else {
 			setSkipExecute(true);

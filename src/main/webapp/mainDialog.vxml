@@ -3,37 +3,16 @@
 <vxml version="2.1">
 
 	<form id="F1">
+		<var name="global" expr="'100'" />
+		<subdialog name="menuResults" src="/vxml-browser/subdialog.vxml" cond="false">
 
-		<subdialog name="SubD_1" src="/vxml-browser/subdialog.vxml" cond="false">
-
-			<param name="confirm_prompt"
-				expr="'y'" />
-
-		</subdialog>
-
-		<subdialog name="SubD_2" src="/vxml-browser/subdialog.vxml" expr="crusty">
-
-			<param name="confirm_prompt"
-				expr="'t'" />
+			<param name="param"
+				expr="'v1'" />
 
 		</subdialog>
+		<prompt>Return value is <value expr="menuResults.response" /></prompt>
 
-		<subdialog name="SubD_3" src="/vxml-browser/subdialog.vxml" cond="true" expr="">
-
-			<param name="confirm_prompt"
-				expr="'g'" />
-
-			<filled>
-
-				<prompt>
-
-					Poppa oo mow mow!
-
-				</prompt>
-
-			</filled>
-
-		</subdialog>
+		
 
 	</form>
 

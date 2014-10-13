@@ -2,21 +2,15 @@
 
 <vxml version="2.1">
 	<form id="F1">
-		<var name="confirm_prompt" />
-		<var name="response" />
+		<var name="param" />
+		<var name="global" />
+		<var name="response" expr="param"/>
 		<field name="field_confirm" type="boolean">
 			<prompt>
-				Here I am
-				<value expr="confirm_prompt" />
+				In sub dialog. The value passed is
+				<value expr="param" />
 			</prompt>
-			<filled>
-				<if cond="field_confirm == true">
-					<assign name="response" expr="'yes'" />
-					<else />
-					<assign name="response" expr="'no'" />
-				</if>
-				<return namelist="response" />
-			</filled>
+			<return namelist="response"/>
 		</field>
 	</form>
 </vxml>

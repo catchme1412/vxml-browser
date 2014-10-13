@@ -22,16 +22,12 @@ public class IfTag extends AbstractTag {
 		ifConditionLevel++;
 		cond = getAttribute("cond");
 		System.out.println(cond);
-		Object t = VxmlBrowser.getContext().executeScript("path_type;");
+		Object t = VxmlBrowser.getContext().executeScript(cond);
         System.out.println(t);
 	}
 
 	@Override
 	public void execute() {
-		Object t = VxmlBrowser.getContext().executeScript("entry;");
-		System.out.println(t);
-		Object scriptVar = VxmlBrowser.getContext().getScriptVar("selection");
-        System.out.println(scriptVar);
 		isIfConditionTrue = (Boolean) VxmlBrowser.getContext().executeScript(cond);
 		isIfConditionTrue = isIfConditionTrue != null && isIfConditionTrue;
 		markIfCondition(isIfConditionTrue);

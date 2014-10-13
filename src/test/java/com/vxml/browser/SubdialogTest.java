@@ -22,7 +22,6 @@ public class SubdialogTest {
 
         VxmlBrowserWrapper verifier = new VxmlBrowserWrapper(vxmlBrowser);
         verifier.start();
-        AssertJUnit.assertEquals(verifier.nextOuput(), "TTS:Input 1 or 2 or something else?");
-        AssertJUnit.assertEquals(verifier.nextOuput(), "TTS:Input is one");
+        AssertJUnit.assertEquals(verifier.nextOuput(), "TTS:In sub dialog. The value passed is");
     }
 }

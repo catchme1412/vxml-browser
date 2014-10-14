@@ -100,9 +100,6 @@ public abstract class AbstractTag implements Tag {
     }
 
     public static void setSkipExecute(boolean isSkip) {
-        if(isSkip) {
-//            System.err.println("SKIPPING:" + new Exception().getStackTrace()[1]);
-        }
         AbstractTag.isSkipExecute = isSkip;
     }
 

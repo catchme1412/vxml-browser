@@ -3,7 +3,6 @@ package com.vxml.core.browser;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.logging.Logger;
 
@@ -13,10 +12,7 @@ import javax.script.ScriptException;
 
 import org.apache.http.client.ClientProtocolException;
 
-import sun.org.mozilla.javascript.internal.NativeArray;
-
 import com.vxml.core.VxmlException;
-import com.vxml.store.DocumentStore;
 
 public class ScriptExecutionContext {
 

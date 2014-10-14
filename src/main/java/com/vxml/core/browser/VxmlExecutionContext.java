@@ -17,7 +17,6 @@ import com.vxml.audio.NativeCommand;
 import com.vxml.core.VxmlException;
 import com.vxml.parser.event.EventHandler;
 import com.vxml.tag.FormTag;
-import com.vxml.tag.SubdialogTag;
 
 public class VxmlExecutionContext {
 
@@ -139,7 +138,9 @@ public class VxmlExecutionContext {
 
     public boolean playAudio(String audioUrl) throws InterruptedException, ExecutionException, IOException {
         Process p = nativeCommand.play(audioUrl);
+        p.waitFor();
         return p.exitValue() == 0;
+//        return true;
     }
 
     public void playTTS(String text) throws IOException, InterruptedException, ExecutionException {

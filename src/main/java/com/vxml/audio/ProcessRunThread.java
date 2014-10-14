@@ -2,11 +2,11 @@ package com.vxml.audio;
 
 import java.util.concurrent.Callable;
 
-public class ProcessWaitThread implements Callable<Process> {
+public class ProcessRunThread implements Callable<Process> {
 
 	private Process process;
 
-	public ProcessWaitThread(Process proc) {
+	public ProcessRunThread(Process proc) {
 		process = proc;
 	}
 

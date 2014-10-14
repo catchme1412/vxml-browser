@@ -87,8 +87,8 @@ public abstract class AbstractTag implements Tag {
             // System.out.println("SKIPPING:" + this);
         } else {
             if (!getNode().getOwnerDocument().getDocumentURI().contains("app_root.vxml")) {
-                System.out.println("EXECUTING:" + this + "\t<=\t" + getNode().getOwnerDocument().getDocumentURI());
-                System.out.println("EXECUTING:" + getNode().getOwnerDocument().getDocumentURI());
+//                System.out.println("EXECUTING:" + this + "\t<=\t" + getNode().getOwnerDocument().getDocumentURI());
+//                System.out.println("EXECUTING:" + getNode().getOwnerDocument().getDocumentURI());
             }
             execute();
             VxmlBrowser.getContext().getEventHandler().invokeListeners(this);

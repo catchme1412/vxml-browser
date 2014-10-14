@@ -21,12 +21,13 @@ public class ValueTag extends AbstractTag {
 
     @Override
     public void execute() {
-        if (getNode().getParentNode().getNodeName().equals("prompt")) {
+        String parentNodeName = getNode().getParentNode().getNodeName();
+        if (parentNodeName.equals("prompt") || parentNodeName.equals("audio")) {
             String expr = getAttribute("expr");
             String subDialog = (String)VxmlBrowser.getContext().getScriptVar(VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + SubdialogTag.SUBDIALOG_NAME);
-            if (subDialog != null) {
-                expr = subDialog + "." + expr;
-            }
+//            if (subDialog != null) {
+//                expr = subDialog + "." + expr;
+//            }
             Object value = VxmlBrowser.getContext().executeScript(expr);
             if (value == null || value instanceof Undefined) {
                 value = VxmlBrowser.getContext().getScriptVar(expr);

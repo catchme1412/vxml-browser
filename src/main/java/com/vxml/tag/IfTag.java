@@ -21,9 +21,6 @@ public class IfTag extends AbstractTag {
 		isSkipBackup = isSkipExecute();
 		ifConditionLevel++;
 		cond = getAttribute("cond");
-		System.out.println(cond);
-		Object t = VxmlBrowser.getContext().executeScript(cond);
-        System.out.println(t);
 	}
 
 	@Override
@@ -45,12 +42,10 @@ public class IfTag extends AbstractTag {
 
 	@Override
 	public void endTag() {
-	    System.err.println(cond);
 		// markIfCondition(false);
 		// decrement only after setting calling markIfCondition method
 		ifConditionLevel--;
 		setSkipExecute(isSkipBackup);
-		System.err.println("RESETTTING: " + isSkipBackup + ":" + ifConditionLevel);
 	}
 
 }

@@ -51,13 +51,6 @@ public class FilledTag extends AbstractTag {
 			Object value = new DtmfInput(VxmlBrowser.getContext().getDtmfSource()).read();
 			if (value != null && !"-".equals(value)) {
 				String fieldName = getFieldName();
-				//TODO check whether this can be avoided
-				if (VxmlBrowser.getContext().getScriptVar(fieldName) != null) {
-				    Object t = VxmlBrowser.getContext().getScriptVar(fieldName);
-				    if (!(t instanceof sun.org.mozilla.javascript.internal.Undefined)) {
-				        value = t;
-				    }
-				}
 				if (Boolean.parseBoolean(value.toString())) {
 					value = true;
 				}

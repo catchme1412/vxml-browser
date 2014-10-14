@@ -7,6 +7,7 @@ import org.w3c.dom.Document;
 
 import com.vxml.browser.event.Event;
 import com.vxml.core.browser.VxmlBrowser;
+import com.vxml.core.browser.VxmlScriptEngine;
 import com.vxml.store.DocumentStore;
 import com.vxml.tag.AbstractTag;
 
@@ -26,6 +27,8 @@ public class VxmlDoc {
     public VxmlDoc(String string) {
         
     	AbstractTag.setSkipExecute(false);
+    	VxmlBrowser.getContext().assignScriptVar(VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + ".dtmfInput",
+                null);
     	AbstractTag.clearDtmfTranslations();
         this.setDocumentUrl(string);
         URI uri;

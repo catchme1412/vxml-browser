@@ -3,6 +3,7 @@ package com.vxml.tag;
 import org.w3c.dom.Node;
 
 import com.vxml.browser.event.Event;
+import com.vxml.browser.event.ReturnFromSubdialogEvent;
 import com.vxml.core.browser.VxmlBrowser;
 import com.vxml.parser.VxmlDoc;
 
@@ -43,7 +44,13 @@ public class SubmitTag extends AbstractTag {
             }
 				//TODO enable POST method
 //				result = new DocumentStore().getDoc(new URI(queryParams.toString()));
-				new VxmlDoc(queryParams.toString()).play();
+				try {
+                    new VxmlDoc(queryParams.toString()).play();
+                } catch (Event e) {
+                    if (e instanceof ReturnFromSubdialogEvent) {
+                        System.err.println("Returning from submit .........");
+                    }
+                }
         }
         
     }

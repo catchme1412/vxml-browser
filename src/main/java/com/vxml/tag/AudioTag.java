@@ -44,7 +44,7 @@ public class AudioTag extends AbstractTag {
                     e.printStackTrace();
                 }
             }
-            VxmlBrowser.getContext().setSlientMode(true);
+//            VxmlBrowser.getContext().setSlientMode(true);
         } catch (Exception e) {
             e.printStackTrace();
         }

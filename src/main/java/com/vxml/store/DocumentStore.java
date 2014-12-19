@@ -38,8 +38,10 @@ public class DocumentStore {
 			domFactory.setIgnoringElementContentWhitespace(true);
 			DocumentBuilder builder = domFactory.newDocumentBuilder();
 			doc = builder.parse(is);
+			doc.setDocumentURI(uri.toString());
 		} catch (Exception e) {
 			System.err.println("FAILED TO FETCH:" + uri);
+			System.exit(-1);
 		} finally {
 			try {
 				if (is != null) {
@@ -49,7 +51,6 @@ public class DocumentStore {
 				e.printStackTrace();
 			}
 		}
-		doc.setDocumentURI(uri.toString());
 		return doc;
 	}
 

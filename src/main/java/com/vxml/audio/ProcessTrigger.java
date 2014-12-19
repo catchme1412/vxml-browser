@@ -22,6 +22,7 @@ public class ProcessTrigger {
     
     public static void main(String args[]) throws IOException, InterruptedException, ExecutionException {
         String p = new ProcessTrigger().trigger(new String[] {"play", "/tmp/ivr.wav"});
-        System.out.println("FFFFFFFFF" + p);
+        System.out.println("Your input" + p);
+        System.out.println("Your input  " + p);
     }
 }

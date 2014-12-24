@@ -37,12 +37,12 @@ public class ElseifTag extends AbstractTag {
 
 	private void markElseIfCondition(boolean isTrue) {
 		VxmlBrowser.getContext().assignScriptVar(
-				VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + ".elseIfCondition_" + ifConditionLevel, isTrue);
+				VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + IfTag.IF_CONDITION_LEVEL_PREFIX + ifConditionLevel, isTrue);
 	}
 
 	private Boolean isIfConditionTrue() {
 		return (Boolean) VxmlBrowser.getContext().getScriptVar(
-				VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + ".ifConditionLevel_" + ifConditionLevel);
+				VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + IfTag.IF_CONDITION_LEVEL_PREFIX + ifConditionLevel);
 	}
 
 	@Override

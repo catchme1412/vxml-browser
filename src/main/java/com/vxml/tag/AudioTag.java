@@ -34,12 +34,14 @@ public class AudioTag extends AbstractTag {
                 System.out.println("Audio:" + audioUrl);
                 try {
                 	audioUrl = audioUrl.replaceAll("audio.en-US.tellme.com", "ivraudio.orbitz.net");
-                	boolean isPlayed = VxmlBrowser.getContext().playAudio(audioUrl);
-                	if(isPlayed) {
-                	    VxmlBrowser.getContext().setSlientMode(true);
-                	} else {
-                	    VxmlBrowser.getContext().setSlientMode(false);
-                	}
+                	if (!"http://ivraudio.orbitz.net/common-audio/posOptions.wav".equals(audioUrl)) {
+                	    boolean isPlayed = VxmlBrowser.getContext().playAudio(audioUrl);
+                	    if(isPlayed) {
+                	        VxmlBrowser.getContext().setSlientMode(true);
+                	    } else {
+                	        VxmlBrowser.getContext().setSlientMode(false);
+                	    }
+                	} 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

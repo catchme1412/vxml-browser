@@ -29,11 +29,12 @@ public class ValueTag extends AbstractTag {
 //                expr = subDialog + "." + expr;
 //            }
             Object value = VxmlBrowser.getContext().executeScript(expr);
-            if (value == null || value instanceof Undefined) {
+            if (value == null || "null".equals(value) || value instanceof Undefined) {
                 value = VxmlBrowser.getContext().getScriptVar(expr);
             }
             try {
                 VxmlBrowser.getContext().playTTS(value.toString());
+                System.out.print("HH");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -62,7 +63,6 @@ public class ValueTag extends AbstractTag {
         engine.put("color", "red");
         engine.put("shape", "rectangle");
         Object t = engine.eval("color == 'red'");
-        System.out.println("FFFFFFFFF" + t);
         // Evaluate a script that outputs the values of these variables.
 
         engine.eval("println (color); println (shape);");

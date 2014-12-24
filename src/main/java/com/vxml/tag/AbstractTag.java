@@ -2,9 +2,11 @@ package com.vxml.tag;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 
 import org.w3c.dom.Node;
 
+import com.sun.org.apache.bcel.internal.generic.NEW;
 import com.vxml.browser.event.Event;
 import com.vxml.core.browser.VxmlBrowser;
 import com.vxml.utils.XmlUtils;
@@ -16,6 +18,8 @@ public abstract class AbstractTag implements Tag {
     private static boolean isSkipExecute;
     
     protected static int ifConditionLevel;
+    
+    protected static Stack<Integer> ifConditionLevelStack = new Stack<Integer>();
     
     private static Map<String, String> dtmfInputTranslationMap = new HashMap<String, String>();
 
@@ -87,7 +91,7 @@ public abstract class AbstractTag implements Tag {
             // System.out.println("SKIPPING:" + this);
         } else {
             if (!getNode().getOwnerDocument().getDocumentURI().contains("app_root.vxml")) {
-                System.out.println("EXECUTING:" + this + "\t<=\t" + getNode().getOwnerDocument().getDocumentURI());
+               // System.out.println("EXECUTING:" + this + "\t<=\t" + getNode().getOwnerDocument().getDocumentURI());
 //                System.out.println("EXECUTING:" + getNode().getOwnerDocument().getDocumentURI());
             }
             execute();

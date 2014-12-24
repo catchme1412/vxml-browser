@@ -7,7 +7,7 @@ import com.vxml.core.browser.VxmlScriptEngine;
 
 public class IfTag extends AbstractTag {
 
-	private static final String IF_CONDITION_LEVEL_PREFIX = ".ifConditionLevel_";
+	public static final String IF_CONDITION_LEVEL_PREFIX = ".ifConditionLevel_";
 	private Boolean isIfConditionTrue;
 	private boolean isSkipBackup;
 	private String cond;
@@ -20,6 +20,8 @@ public class IfTag extends AbstractTag {
 	public void startTag() {
 		isSkipBackup = isSkipExecute();
 		ifConditionLevel++;
+		ifConditionLevelStack.add(ifConditionLevel);
+		
 		cond = getAttribute("cond");
 	}
 
@@ -42,9 +44,11 @@ public class IfTag extends AbstractTag {
 
 	@Override
 	public void endTag() {
+	    System.out.print("IF"+ this);
 		// markIfCondition(false);
 		// decrement only after setting calling markIfCondition method
 		ifConditionLevel--;
+		ifConditionLevelStack.pop();
 		setSkipExecute(isSkipBackup);
 	}
 

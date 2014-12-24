@@ -60,7 +60,6 @@ public class ForeachTag extends AbstractTag {
 		}
 		if (array instanceof String) {
 		    Object val = VxmlBrowser.getContext().executeScript(array.toString());
-		    System.out.println(val);
 		}
 		setSkipExecute(true);
 	}

@@ -24,7 +24,7 @@ public class VxmlScriptEngine {
 		scriptEngine.eval("application.ANI='3122139141';");
 		scriptEngine.eval("application.UUID='684CB6BA3CCC11E4B810B0FAEB421300';");
 		scriptEngine.eval("application.lastresult$.inputmode='dtmf'");
-		scriptEngine.eval("var session={};session.telephone={};session.telephone.dnis=8886564546;");
+		scriptEngine.eval("var session={};session.telephone={};");
 		scriptEngine.eval("var " + SCRIPT_EXECUTION_NAME_SPACE + "={};");
 		scriptEngine.eval(SCRIPT_EXECUTION_NAME_SPACE + ".dtmfInput=null;");
 		scriptEngine.eval("var event;");

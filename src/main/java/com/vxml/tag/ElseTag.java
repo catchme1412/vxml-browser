@@ -36,7 +36,7 @@ public class ElseTag extends AbstractTag {
 
 	private Boolean isIfConditionTrue() {
 		return (Boolean) VxmlBrowser.getContext().getScriptVar(
-				VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + ".ifConditionLevel_" + ifConditionLevel);
+				VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + IfTag.IF_CONDITION_LEVEL_PREFIX + ifConditionLevel);
 	}
 
 	@Override

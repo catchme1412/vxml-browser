@@ -19,11 +19,11 @@ public class VxmlTag extends AbstractTag {
 	@Override
 	public void startTag() {
 	    ifConditionLevel = 0;
-	    try {
-	        ifConditionLevel = ifConditionLevelStack.pop();
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
+//	    try {
+//	        ifConditionLevel = ifConditionLevelStack.pop();
+//	    } catch (Exception e) {
+//	        e.printStackTrace();
+//	    }
 	}
 	
 	@Override

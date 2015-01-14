@@ -9,7 +9,8 @@ import com.vxml.core.browser.VxmlScriptEngine;
 public class ReturnTag extends AbstractTag {
 
     private String subdialogName;
-
+    
+    
     public ReturnTag(Node node) {
         super(node);
     }
@@ -23,6 +24,7 @@ public class ReturnTag extends AbstractTag {
 
     @Override
     public void execute() throws ReturnFromSubdialogEvent {
+        
         String namelist = getAttribute("namelist");
         for (String name : namelist.split(" ")) {
             String subDialogVariableName = subdialogName + "." + name;

@@ -18,7 +18,9 @@ public class ElseifTag extends AbstractTag {
 			String cond = getAttribute("cond");
 			Boolean elseIfCondition = (Boolean) VxmlBrowser.getContext().executeScript(cond);
 
-			if (elseIfCondition != null && elseIfCondition) {
+			boolean isAllParentIfAreTrue = checkParentIfs();
+			
+			if (elseIfCondition != null && elseIfCondition && isAllParentIfAreTrue) {
 				setSkipExecute(false);
 				markElseIfCondition(true);
 			} else {
@@ -31,7 +33,18 @@ public class ElseifTag extends AbstractTag {
 	}
 
 
-	@Override
+	private boolean checkParentIfs() {
+        for (int i = 0; i < ifConditionLevel - 1 ; i++) {
+            Boolean t = (Boolean) VxmlBrowser.getContext().getScriptVar(
+                    VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + IfTag.IF_CONDITION_LEVEL_PREFIX + i);
+            if (t != null && t == false) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
 	public void execute() {
 	}
 

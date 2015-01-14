@@ -13,6 +13,7 @@ import com.vxml.parser.VxmlDoc;
 public class SubdialogTag extends AbstractTag {
 
     public static final String SUBDIALOG_NAME = ".subdialogName";
+    private int ifConditionLevelBackup;
     
     private String subdialogName;
 
@@ -23,6 +24,8 @@ public class SubdialogTag extends AbstractTag {
     @Override
     public void startTag() {
         subdialogName = getAttribute("name");
+        VxmlBrowser.getContext().assignScriptVar(subdialogName, "{}");
+        ifConditionLevelBackup = ifConditionLevel;
     }
 
     @Override
@@ -70,6 +73,7 @@ public class SubdialogTag extends AbstractTag {
 
     @Override
     public void endTag() {
+        ifConditionLevel = ifConditionLevelBackup;
         VxmlBrowser.getContext().assignScriptVar(VxmlScriptEngine.SCRIPT_EXECUTION_NAME_SPACE + SUBDIALOG_NAME, null);
         System.err.println("SUBDIALOG ENDS" + subdialogName);
     }

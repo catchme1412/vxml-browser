@@ -28,7 +28,7 @@ public class VxmlBrowser {
 	public void start() throws VxmlException, URISyntaxException, Event {
 		URI uri = new URI(entryPointUrl);
 		VxmlExecutionContext.setDocBaseUrl(uri.getScheme() + "://" + uri.getAuthority());
-		
+
 		VxmlDoc vxmlDoc = new VxmlDoc(entryPointUrl);
 		vxmlDoc.play();
 	}

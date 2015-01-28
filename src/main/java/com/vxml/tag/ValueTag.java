@@ -33,8 +33,9 @@ public class ValueTag extends AbstractTag {
                 value = VxmlBrowser.getContext().getScriptVar(expr);
             }
             try {
-                VxmlBrowser.getContext().playTTS(value.toString());
-                System.out.print("HH");
+                if (!VxmlBrowser.getContext().isSlientMode()) {
+                    VxmlBrowser.getContext().playTTS(value.toString());
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

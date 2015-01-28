@@ -38,7 +38,7 @@ public class ScriptTag extends AbstractTag {
     
     @Override
     public void endTag() {
-    	VxmlBrowser.getContext().setSlientMode(false);
+//    	VxmlBrowser.getContext().setSlientMode(false);
     }
 
 }

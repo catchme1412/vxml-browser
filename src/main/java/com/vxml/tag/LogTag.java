@@ -9,6 +9,7 @@ import com.vxml.core.browser.VxmlBrowser;
 public class LogTag extends AbstractTag {
 
     private static final Logger log = Logger.getLogger(LogTag.class.getName());
+    private boolean isSlientModeBackup;
 
     public LogTag(Node node) {
         super(node);
@@ -16,7 +17,8 @@ public class LogTag extends AbstractTag {
 
     @Override
     public void startTag() {
-    	VxmlBrowser.getContext().setSlientMode(true);
+        isSlientModeBackup = VxmlBrowser.getContext().isSlientMode();
+        VxmlBrowser.getContext().setSlientMode(true);
     }
 
     @Override
@@ -27,6 +29,6 @@ public class LogTag extends AbstractTag {
 
     @Override
     public void endTag() {
-    	VxmlBrowser.getContext().setSlientMode(false);
+    	VxmlBrowser.getContext().setSlientMode(isSlientModeBackup);
     }
 }

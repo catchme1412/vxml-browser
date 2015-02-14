@@ -21,8 +21,8 @@ public class GrammarTag extends AbstractTag {
 	public void startTag() {
 	    isSkipTag = isSkipExecute();
 	    mode = getAttribute("mode");
-	    isSlientModeBackup = VxmlBrowser.getContext().isSlientMode();
-		VxmlBrowser.getContext().setSlientMode(true);
+//	    isSlientModeBackup = VxmlBrowser.getContext().isSlientMode();
+//		VxmlBrowser.getContext().setSlientMode(true);
 		if (mode != null && mode.equals("dtmf")) {
 		    setSkipExecute(false);
 		}
@@ -41,7 +41,7 @@ public class GrammarTag extends AbstractTag {
 	
 	@Override
 	public void endTag() {
-		VxmlBrowser.getContext().setSlientMode(isSlientModeBackup);
+//		VxmlBrowser.getContext().setSlientMode(isSlientModeBackup);
 		 setSkipExecute(isSkipTag);
 	}
 	

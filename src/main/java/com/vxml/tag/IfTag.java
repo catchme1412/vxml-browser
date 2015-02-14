@@ -20,7 +20,7 @@ public class IfTag extends AbstractTag {
 	public void startTag() {
 		isSkipBackup = isSkipExecute();
 		ifConditionLevel++;
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + ifConditionLevel + " :::" + this + "::" + getNode().getBaseURI());
+		System.out.println(">>" + ifConditionLevel + " :::" + this + "::" + getNode().getBaseURI());
 		ifConditionLevelStack.add(ifConditionLevel);
 
 		cond = getAttribute("cond");
@@ -28,7 +28,8 @@ public class IfTag extends AbstractTag {
 
 	@Override
 	public void execute() {
-	    System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + ifConditionLevel + " :::" + this);
+	    System.out.println(">>" + ifConditionLevel + " :::" + this);
+	    System.out.println(VxmlBrowser.getContext().executeScript("menuObj['MenuPromptData.filledOptions.filled.file']"));
 		isIfConditionTrue = (Boolean) VxmlBrowser.getContext().executeScript(cond);
 		isIfConditionTrue = isIfConditionTrue != null && isIfConditionTrue;
 		markIfCondition(isIfConditionTrue);

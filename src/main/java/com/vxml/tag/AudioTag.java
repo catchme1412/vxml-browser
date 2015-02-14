@@ -30,7 +30,7 @@ public class AudioTag extends AbstractTag {
                 convert = VxmlBrowser.getContext().executeScript(expr);
             }
             audioUrl = (String) (src != null ? src : convert);
-            if (audioUrl != null && !VxmlBrowser.getContext().isSlientMode()) {
+            if (audioUrl != null ) {
                 System.out.println("Audio:" + audioUrl);
                 try {
                 	audioUrl = audioUrl.replaceAll("audio.en-US.tellme.com", "ivraudio.orbitz.net");
@@ -58,7 +58,7 @@ public class AudioTag extends AbstractTag {
 	
 	@Override
 	public void endTag() {
-	    VxmlBrowser.getContext().setSlientMode(isSlientBackup);
+//	    VxmlBrowser.getContext().setSlientMode(isSlientBackup);
 	}
 
 }

@@ -13,13 +13,13 @@ public class ElseTag extends AbstractTag {
 
     @Override
     public void startTag() {
-        // Boolean isIfCondition = isIfConditionTrue();
+        Boolean isIfConditionTrue = isIfConditionTrue();
         Boolean isElseIfCondition = checkElseIfCondition();
         boolean isElseIfPresent = isElseIfCondition != null;
 
         boolean isAllParentIfsTrue = checkParentIfs();
 
-        if (isAllParentIfsTrue && !isSkipExecute()) {
+        if (isAllParentIfsTrue && (isIfConditionTrue != null && !isIfConditionTrue)) {
             if (isElseIfPresent && !isElseIfCondition) {
                 setSkipExecute(false);
             } else if (!isSkipExecute()) {

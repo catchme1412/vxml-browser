@@ -19,6 +19,7 @@ public class TextTag extends AbstractTag {
 		if (!text.isEmpty() && !VxmlBrowser.getContext().isSlientMode()) {
 			try {
 			    System.out.println(text);
+			    this.getNode();
 				VxmlBrowser.getContext().playTTS(text);
 			} catch (Exception e) {
 				e.printStackTrace();

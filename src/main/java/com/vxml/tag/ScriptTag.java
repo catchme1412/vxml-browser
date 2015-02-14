@@ -10,13 +10,16 @@ import com.vxml.store.DocumentStore;
 
 public class ScriptTag extends AbstractTag {
 
+    private boolean isSlientModeBackup;
+
     public ScriptTag(Node node) {
         super(node);
     }
 
     @Override
     public void startTag() {
-    	VxmlBrowser.getContext().setSlientMode(true);
+        isSlientModeBackup = VxmlBrowser.getContext().isSlientMode();
+        VxmlBrowser.getContext().setSlientMode(true);
     }
 
     @Override
@@ -34,11 +37,12 @@ public class ScriptTag extends AbstractTag {
         } else {
             VxmlBrowser.getContext().executeScript(getNode().getTextContent());
         }
+        System.out.println("FFF" + VxmlBrowser.getContext().getScriptVar("menuObj"));
     }
     
     @Override
     public void endTag() {
-//    	VxmlBrowser.getContext().setSlientMode(false);
+    	VxmlBrowser.getContext().setSlientMode(isSlientModeBackup);
     }
 
 }

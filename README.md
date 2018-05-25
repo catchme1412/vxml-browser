@@ -1,3 +1,5 @@
+Please refer https://github.com/catchme1412/vxml-browser-jdk8 for a better implementation using JDK 8
+
 VXML browser (VXML interpreter)
 ==============================
 
